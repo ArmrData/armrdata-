@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArmrData — Kontak</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .ijans { margin:24px 24px 0; background:linear-gradient(135deg,#1a0808,#120a0a); border:1px solid rgba(255,68,68,0.3); border-radius:16px; padding:20px; position:relative; overflow:hidden; }
+    .ijans::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,#ff4444,transparent); }
+    .ijans-label { font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:3px; color:#ff4444; text-transform:uppercase; margin-bottom:8px; }
+    .ijans h3 { font-size:1rem; font-weight:700; color:#ff6b6b; margin-bottom:8px; }
+    .ijans p { font-size:0.83rem; color:#9a7070; line-height:1.65; margin-bottom:14px; }
+    .btn-ijans { display:inline-flex; align-items:center; gap:8px; font-family:'Share Tech Mono',monospace; font-size:0.78rem; letter-spacing:1px; color:#fff; background:#ff4444; border:none; border-radius:30px; padding:10px 20px; cursor:pointer; text-decoration:none; transition:opacity 0.2s; }
+    .btn-ijans:hover { opacity:0.85; }
+
+    .form-section { padding:24px 24px 0; }
+    .form-card { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:24px 20px; position:relative; overflow:hidden; }
+    .form-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--cyan),transparent); }
+
+    .info-section { padding:24px 24px 0; }
+    .info-grid { display:flex; flex-direction:column; gap:12px; }
+    .info-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px 20px; display:flex; align-items:center; gap:14px; text-decoration:none; transition:border-color 0.2s,transform 0.2s; }
+    .info-card:hover { border-color:rgba(0,200,255,0.3); transform:translateX(4px); }
+    .info-icon { font-size:1.5rem; flex-shrink:0; }
+    .info-content { flex:1; }
+    .info-label { font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-bottom:4px; }
+    .info-value { font-size:0.9rem; color:var(--cyan); font-weight:600; }
+    .info-arrow { color:var(--cyan); font-size:1rem; }
+
+    .repons-section { margin:24px 24px 0; background:linear-gradient(135deg,#0a1a14,#081510); border:1px solid rgba(0,230,118,0.2); border-radius:16px; padding:22px 20px; }
+    .repons-label { font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:3px; color:var(--green); text-transform:uppercase; margin-bottom:10px; }
+    .repons h3 { font-size:1rem; font-weight:700; color:var(--green); margin-bottom:8px; }
+    .repons p { font-size:0.85rem; color:#6a8a7a; line-height:1.65; }
+    .repons-badge { display:inline-flex; align-items:center; gap:6px; font-family:'Share Tech Mono',monospace; font-size:0.7rem; color:#000; background:var(--green); border-radius:20px; padding:5px 14px; margin-top:12px; font-weight:700; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="index.html" data-i18n="nav_brand">ArmrData</a>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn" onclick="toggleLangMenu()">🌐 <span id="currentLang">KR</span></button>
+        <div class="lang-menu" id="langMenu">
+          <button class="lang-option" data-lang="ht"><span class="lang-flag">🇭🇹</span> Kreyòl</button>
+          <button class="lang-option" data-lang="fr"><span class="lang-flag">🇫🇷</span> Français</button>
+          <button class="lang-option" data-lang="en"><span class="lang-flag">🇺🇸</span> English</button>
+        </div>
+      </div>
+      <button class="hamburger" id="burger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" data-i18n="nav_akèy">Akèy</a></li>
+      <li><a href="apropos.html" data-i18n="nav_apropos">À Propos</a></li>
+      <li><a href="sevis.html" data-i18n="nav_sevis">Sèvis</a></li>
+      <li><a href="ebook.html" data-i18n="nav_ebook">E-Book</a></li>
+      <li><a href="blog.html" data-i18n="nav_blog">Blog</a></li>
+      <li><a href="afilyasyon.html" data-i18n="nav_afilyasyon">Afilyasyon</a></li>
+      <li><a href="kontak.html" class="active" data-i18n="nav_kontak">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-eyebrow" data-i18n="hero_eyebrow">// Kontak</p>
+    <h1><span data-i18n="hero_title1">Kontakte</span><br><span data-i18n="hero_title2">ArmrData</span></h1>
+    <p data-i18n="hero_desc">Yon kesyon, yon pwojè, oswa yon ijans? Ekip nou an la pou reponn ou rapidman ak pwofesyonalis.</p>
+  </section>
+
+  <div class="ijans">
+    <p class="ijans-label" data-i18n="ijans_label">⚠ Ijans Sekirite</p>
+    <h3 data-i18n="ijans_title">🚨 Èske w anba yon atak enfòmatik kounye a?</h3>
+    <p data-i18n="ijans_desc">Pa pèdi tan. Rele nou dirèkteman sou nimewo ijans nou an — ekip nou an disponib pou reponn rapid.</p>
+    <a href="tel:+50937886919" class="btn-ijans" data-i18n="ijans_btn">🔴 Rele Ijans — +509 37 88 6919</a>
+  </div>
+
+  <div class="form-section">
+    <p class="section-label" data-i18n="form_label">// Voye yon Mesaj</p>
+    <div class="form-card">
+      <div class="form-group"><input type="text" data-i18n="ph_non" placeholder="Non Konplè / Non Konpayi"/></div>
+      <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl Pwofesyonèl"/></div>
+      <div class="form-group">
+        <select>
+          <option value="" disabled selected data-i18n="ph_sijè">Sijè — Chwazi youn</option>
+          <option data-i18n="opt1">Mande yon Odit</option>
+          <option data-i18n="opt2">Kesyon sou Fòmasyon</option>
+          <option data-i18n="opt3">Afilyasyon</option>
+          <option data-i18n="opt4">Sipò Teknik</option>
+          <option data-i18n="opt5">Lòt</option>
+        </select>
+      </div>
+      <div class="form-group"><textarea rows="5" data-i18n="ph_mesaj" placeholder="Mesaj ou — eksplike bezwen ou an ak detay"></textarea></div>
+      <button class="btn-primary" data-i18n="btn_send">Voye Mesaj →</button>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <p class="section-label" data-i18n="info_label">// Enfòmasyon Dirèk</p>
+    <div class="info-grid">
+      <a href="mailto:contact.armrdata@gmail.com" class="info-card">
+        <span class="info-icon">✉️</span>
+        <div class="info-content">
+          <div class="info-label" data-i18n="imel_label">Imèl</div>
+          <div class="info-value">contact.armrdata@gmail.com</div>
+        </div>
+        <span class="info-arrow">→</span>
+      </a>
+      <a href="https://wa.me/50937886919" class="info-card">
+        <span class="info-icon">💬</span>
+        <div class="info-content">
+          <div class="info-label" data-i18n="wa_label">WhatsApp / Telefòn</div>
+          <div class="info-value">+509 37 88 6919</div>
+        </div>
+        <span class="info-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="repons-section repons">
+    <p class="repons-label" data-i18n="repons_label">⏱ Tan Repons</p>
+    <h3 data-i18n="repons_title">✅ Repons Garanti</h3>
+    <p data-i18n="repons_desc">N ap reponn ou nan mwens pase 24 èdtan — paske nou respekte tan ou epi nou òganize pou ba ou pi bon sèvis la.</p>
+    <span class="repons-badge" data-i18n="repons_badge">⚡ Mwens pase 24h</span>
+  </div>
+
+  <footer>
+    <p class="footer-brand">🛡️ ArmrData</p>
+    <p class="footer-tag"><span data-i18n="footer_tag">Securing your dataworld!</span></p>
+  </footer>
+
+  <script src="lang.js"></script>
+  <script>
+    document.getElementById('burger').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('#navLinks a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+    var langCodes = { ht:'KR', fr:'FR', en:'EN' };
+    function updateLangDisplay() {
+      document.getElementById('currentLang').textContent = langCodes[getLang()] || 'KR';
+    }
+    initLangSwitcher('kontak');
+    updateLangDisplay();
+    document.querySelectorAll('.lang-option').forEach(function(btn) {
+      btn.addEventListener('click', function() { updateLangDisplay(); });
+    });
+  </script>
+
+</body>
+</html>
+

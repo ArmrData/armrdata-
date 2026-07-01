@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArmrData — E-Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .hero { text-align:center; }
+    .hero-emoji { font-size:3rem; display:block; margin-bottom:16px; position:relative; z-index:2; }
+    .hero h1 { font-size:2.2rem; font-weight:700; line-height:1.15; margin-bottom:8px; }
+    .hero h1 span { color:var(--cyan); }
+    .hero-sub { font-family:'Share Tech Mono',monospace; font-size:0.8rem; color:var(--muted); letter-spacing:2px; margin-bottom:24px; position:relative; z-index:2; }
+    .badge-vedèt { display:inline-flex; align-items:center; gap:6px; font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold); background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.3); border-radius:20px; padding:5px 14px; position:relative; z-index:2; }
+
+    .book-card { margin:28px 24px; background:linear-gradient(135deg,#0d1829,#0a1520); border:1px solid rgba(0,200,255,0.25); border-radius:20px; padding:28px 24px; position:relative; overflow:hidden; }
+    .book-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--cyan),transparent); }
+    .book-title { font-size:1.3rem; font-weight:700; color:var(--white); margin-bottom:6px; }
+    .book-desc { font-size:0.85rem; color:#6a7d90; margin-bottom:20px; line-height:1.6; }
+    .features { display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
+    .feature-item { display:flex; align-items:center; gap:10px; font-size:0.88rem; color:#b0bec5; }
+    .feature-check { color:var(--green); font-size:1rem; flex-shrink:0; }
+    .price-block { margin-bottom:4px; }
+    .price-label-txt { font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-bottom:6px; }
+    .price-main { font-size:1.6rem; font-weight:700; color:var(--green); }
+    .price-alt { font-size:0.9rem; color:#6a7d90; margin-top:2px; }
+
+    .lang-section { margin:0 24px 28px; }
+    .lang-title-txt { font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:3px; color:var(--cyan); text-transform:uppercase; margin-bottom:14px; text-align:center; }
+    .lang-grid { display:flex; flex-direction:column; gap:10px; }
+    .lang-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px 20px; display:flex; align-items:center; gap:14px; cursor:pointer; transition:border-color 0.2s,transform 0.2s; text-decoration:none; }
+    .lang-card:hover { border-color:rgba(0,200,255,0.3); transform:translateX(4px); }
+    .lang-flag-big { font-size:1.6rem; }
+    .lang-info { flex:1; }
+    .lang-name { font-size:1rem; font-weight:600; color:var(--green); margin-bottom:2px; }
+    .lang-sub { font-size:0.78rem; color:var(--muted); }
+    .lang-arrow { color:var(--cyan); font-size:1rem; }
+
+    .buy-section { padding:0 24px 40px; }
+    .buy-title { font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:3px; color:var(--cyan); text-transform:uppercase; margin-bottom:16px; text-align:center; }
+    .buy-steps { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px; margin-bottom:20px; }
+    .buy-step { display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; }
+    .buy-step:last-child { margin-bottom:0; }
+    .step-num { font-family:'Share Tech Mono',monospace; font-size:0.7rem; color:var(--bg); background:var(--cyan); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:700; }
+    .step-text { font-size:0.85rem; color:#b0bec5; line-height:1.5; padding-top:2px; }
+    .step-note { margin-top:14px; padding:10px 14px; background:rgba(0,200,255,0.05); border-left:2px solid var(--cyan); border-radius:0 8px 8px 0; font-size:0.8rem; color:#90caf9; }
+
+    .btn-preview { display:block; width:100%; text-align:center; font-family:'Share Tech Mono',monospace; font-size:0.85rem; letter-spacing:1px; color:var(--cyan); background:transparent; border:2px solid var(--cyan); border-radius:30px; padding:14px; margin-bottom:12px; cursor:pointer; text-decoration:none; transition:all 0.2s; }
+    .btn-preview:hover { background:rgba(0,200,255,0.08); }
+    .btn-buy { display:block; width:100%; text-align:center; font-family:'Share Tech Mono',monospace; font-size:0.85rem; letter-spacing:1px; color:#000; background:var(--green); border:none; border-radius:30px; padding:16px; cursor:pointer; text-decoration:none; font-weight:700; transition:opacity 0.2s; }
+    .btn-buy:hover { opacity:0.9; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="index.html" data-i18n="nav_brand">ArmrData</a>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn" onclick="toggleLangMenu()">🌐 <span id="currentLang">KR</span></button>
+        <div class="lang-menu" id="langMenu">
+          <button class="lang-option" data-lang="ht"><span class="lang-flag">🇭🇹</span> Kreyòl</button>
+          <button class="lang-option" data-lang="fr"><span class="lang-flag">🇫🇷</span> Français</button>
+          <button class="lang-option" data-lang="en"><span class="lang-flag">🇺🇸</span> English</button>
+        </div>
+      </div>
+      <button class="hamburger" id="burger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" data-i18n="nav_akèy">Akèy</a></li>
+      <li><a href="apropos.html" data-i18n="nav_apropos">À Propos</a></li>
+      <li><a href="sevis.html" data-i18n="nav_sevis">Sèvis</a></li>
+      <li><a href="ebook.html" class="active" data-i18n="nav_ebook">E-Book</a></li>
+      <li><a href="blog.html" data-i18n="nav_blog">Blog</a></li>
+      <li><a href="afilyasyon.html" data-i18n="nav_afilyasyon">Afilyasyon</a></li>
+      <li><a href="kontak.html" data-i18n="nav_kontak">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-eyebrow" data-i18n="hero_eyebrow">// E-Book</p>
+    <span class="hero-emoji">📘</span>
+    <h1><span data-i18n="hero_title">E-Book ArmrData</span></h1>
+    <p class="hero-sub" data-i18n="hero_sub">Pwoteksyon dijital nan men ou</p>
+    <span class="badge-vedèt" data-i18n="badge">⭐ Liv Vedèt</span>
+  </section>
+
+  <div class="book-card">
+    <div class="book-title" data-i18n="book_title">📋 Blendaj Dijital</div>
+    <div class="book-desc" data-i18n="book_desc">7 etap pou pwoteje tèt ou ak biznis ou kont pirat.</div>
+    <div class="features">
+      <div class="feature-item"><span class="feature-check">✓</span><span data-i18n="feat1">Kreyòl Ayisyen</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span><span data-i18n="feat2">Français</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span><span data-i18n="feat3">English</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span><span data-i18n="feat4">Pou moun ak antrepriz</span></div>
+    </div>
+    <div class="price-block">
+      <div class="price-label-txt" data-i18n="price_label">Pri</div>
+      <div class="price-main" data-i18n="price_main">$14.99 USD</div>
+      <div class="price-alt" data-i18n="price_alt">oswa 1 500 HTG</div>
+    </div>
+  </div>
+
+  <div class="lang-section">
+    <p class="lang-title-txt" data-i18n="lang_title">🌐 Chwazi Lang Ou</p>
+    <div class="lang-grid">
+      <a href="#" class="lang-card">
+        <span class="lang-flag-big">🇭🇹</span>
+        <div class="lang-info">
+          <div class="lang-name" data-i18n="lang1_name">Kreyòl Ayisyen</div>
+          <div class="lang-sub" data-i18n="lang1_sub">Vèsyon orijinal la.</div>
+        </div>
+        <span class="lang-arrow">→</span>
+      </a>
+      <a href="#" class="lang-card">
+        <span class="lang-flag-big">🇫🇷</span>
+        <div class="lang-info">
+          <div class="lang-name" data-i18n="lang2_name">Français</div>
+          <div class="lang-sub" data-i18n="lang2_sub">Version française.</div>
+        </div>
+        <span class="lang-arrow">→</span>
+      </a>
+      <a href="#" class="lang-card">
+        <span class="lang-flag-big">🇺🇸</span>
+        <div class="lang-info">
+          <div class="lang-name" data-i18n="lang3_name">English</div>
+          <div class="lang-sub" data-i18n="lang3_sub">English edition.</div>
+        </div>
+        <span class="lang-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="buy-section">
+    <p class="buy-title" data-i18n="buy_title">📱 Kijan Pou Achte Liv la?</p>
+    <div class="buy-steps">
+      <div class="buy-step"><div class="step-num">1</div><div class="step-text" data-i18n="step1">Klike sou "Achte Kounye a"</div></div>
+      <div class="buy-step"><div class="step-num">2</div><div class="step-text" data-i18n="step2">Fè peman MonCash</div></div>
+      <div class="buy-step"><div class="step-num">3</div><div class="step-text" data-i18n="step3">Voye resi peman an</div></div>
+      <div class="buy-step"><div class="step-num">4</div><div class="step-text" data-i18n="step4">Resevwa liv la pa imèl</div></div>
+      <div class="step-note" data-i18n="step_note">🔒 Apre konfimasyon peman an, ou ap resevwa vèsyon lang ou te chwazi a.</div>
+    </div>
+    <a href="#" class="btn-preview" data-i18n="btn_preview">Li Apèsi →</a>
+    <a href="#" class="btn-buy" data-i18n="btn_buy">Achte Kounye a</a>
+  </div>
+
+  <footer>
+    <p class="footer-brand">🛡️ ArmrData</p>
+    <p class="footer-tag"><span data-i18n="footer_tag">Securing your dataworld!</span></p>
+  </footer>
+
+  <script src="lang.js"></script>
+  <script>
+    document.getElementById('burger').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('#navLinks a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+    var langCodes = { ht:'KR', fr:'FR', en:'EN' };
+    function updateLangDisplay() {
+      document.getElementById('currentLang').textContent = langCodes[getLang()] || 'KR';
+    }
+    initLangSwitcher('ebook');
+    updateLangDisplay();
+    document.querySelectorAll('.lang-option').forEach(function(btn) {
+      btn.addEventListener('click', function() { updateLangDisplay(); });
+    });
+  </script>
+
+</body>
+</html>

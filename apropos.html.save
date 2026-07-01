@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ht">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>À Propos | ArmrData</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<section class="about">
+
+<h1>🛡️ Konsènan ArmrData</h1>
+
+<p>
+
+ArmrData se yon inisyativ ki fèt pou ede moun ak antrepriz yo pwoteje done yo, amelyore sekirite dijital yo epi devlope bon pratik cybersécurité.
+
+</p>
+
+<p>
+
+Nan yon mond kote menas dijital yo ap ogmante chak jou, misyon nou se rann sekirite enfòmatik pi aksesib, pi senp epi pi efikas pou tout moun.
+
+</p>
+
+<h2>Misyon Nou</h2>
+
+<p>
+
+Ede moun ak biznis yo pwoteje enfòmasyon yo kont menas dijital modèn yo.
+
+</p>
+
+<h2>Vizyon Nou</h2>
+
+<p>
+
+Vin yon referans nan domèn cybersécurité nan Karayib la ak pi lwen toujou.
+
+</p>
+
+<h2>Valè Nou Yo</h2>
+
+<ul>
+
+<li>Konfyans</li>
+
+<li>Profesyonalis</li>
+
+<li>Inovasyon</li>
+
+<li>Entegrite</li>
+
+<li>Pwoteksyon</li>
+
+</ul>
+
+</section>
+
+<footer>
+
+<h3>🛡️ ArmrData</h3>
+
+<p>Securing your dataworld!</p>
+
+</footer>
+
+</body>
+
+</html

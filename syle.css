@@ -1,0 +1,19 @@
+header { 
+    background: #0a0f1d; 
+    padding: 20px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-bottom: 2px solid #00D26A; 
+}
+.nav-links a { 
+    color: white; 
+    text-decoration: none; 
+    margin: 0 15px; 
+    font-family: sans-serif; 
+    transition: 0.3s; 
+}
+.nav-links a:hover { color: #00D26A; }
+
+/* Selektè Lang */
+.lang-selector { color: #00D26A; font-weight: bold; cursor: pointer; }

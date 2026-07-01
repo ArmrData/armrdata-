@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArmrData — Securing your dataworld!</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; height:100%; overflow:hidden; background:#080b12; }
+
+    .splash {
+      position:fixed; inset:0;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      background: radial-gradient(ellipse at 50% 35%, rgba(0,200,255,0.1) 0%, transparent 65%), #080b12;
+      overflow:hidden;
+    }
+
+    /* Grid background */
+    .splash::before {
+      content:'';
+      position:absolute; inset:0;
+      background-image:
+        linear-gradient(rgba(0,200,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,255,0.04) 1px, transparent 1px);
+      background-size:44px 44px;
+      pointer-events:none;
+      animation: gridFade 3.5s ease-out forwards;
+    }
+    @keyframes gridFade {
+      0%   { opacity:0; }
+      30%  { opacity:1; }
+      100% { opacity:0.5; }
+    }
+
+    /* Rings pulse */
+    .ring {
+      position:absolute;
+      border-radius:50%;
+      border:1px solid rgba(0,200,255,0.15);
+      top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      opacity:0;
+      animation: ringPulse 3s ease-out infinite;
+    }
+    .ring.r1 { width:280px; height:280px; animation-delay:1.2s; }
+    .ring.r2 { width:380px; height:380px; animation-delay:1.7s; border-color:rgba(0,200,255,0.09); }
+    .ring.r3 { width:480px; height:480px; animation-delay:2.2s; border-color:rgba(0,200,255,0.05); }
+    @keyframes ringPulse {
+      0%   { opacity:0; transform:translate(-50%,-50%) scale(0.82); }
+      35%  { opacity:0.7; }
+      100% { opacity:0; transform:translate(-50%,-50%) scale(1.18); }
+    }
+
+    /* Logo wrapper — drops from top */
+    .logo-wrap {
+      position:relative; z-index:2;
+      display:flex; flex-direction:column;
+      align-items:center;
+      opacity:0;
+      transform:translateY(-320px) scale(0.65);
+      animation:dropIn 1.1s cubic-bezier(.28,1.6,.6,1) 0.15s forwards;
+    }
+    @keyframes dropIn {
+      0%   { opacity:0; transform:translateY(-320px) scale(0.65); }
+      55%  { opacity:1; transform:translateY(18px) scale(1.04); }
+      75%  { transform:translateY(-6px) scale(0.98); }
+      100% { opacity:1; transform:translateY(0) scale(1); }
+    }
+
+    /* Logo image — moves right to left while settling */
+    .logo-img {
+      width:230px; height:auto;
+      filter:
+        drop-shadow(0 0 28px rgba(0,200,255,0.55))
+        drop-shadow(0 0 60px rgba(0,200,255,0.25));
+      animation:
+        slideLeft 1.1s cubic-bezier(.28,1.6,.6,1) 0.15s both,
+        floatLogo 3.8s ease-in-out 1.4s infinite;
+    }
+    /* Slide from right to center */
+    @keyframes slideLeft {
+      0%   { transform:translateX(180px); }
+      100% { transform:translateX(0); }
+    }
+    @keyframes floatLogo {
+      0%,100% { transform:translateY(0); }
+      50%      { transform:translateY(-10px); }
+    }
+
+    /* Brand name slides out from behind logo, left to right */
+    .brand-row {
+      margin-top:16px;
+      overflow:hidden;
+      height:56px;
+      display:flex; align-items:center;
+    }
+    .brand-name {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-size:2.3rem;
+      font-weight:900;
+      letter-spacing:4px;
+      white-space:nowrap;
+      width:0;
+      overflow:hidden;
+      animation:revealBrand 0.9s cubic-bezier(.4,0,.2,1) 1.25s forwards;
+    }
+    @keyframes revealBrand {
+      from { width:0; }
+      to   { width:310px; }
+    }
+    .brand-name .armr {
+      color:#e8edf2;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .brand-name .data {
+      color:#2f9dff;
+      text-shadow:
+        0 0 18px rgba(47,157,255,0.7),
+        0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    /* Slogan fades in last */
+    .slogan {
+      margin-top:12px;
+      font-family: Arial, sans-serif;
+      font-size:0.88rem;
+      font-weight:600;
+      letter-spacing:2.5px;
+      color:#7a9ab0;
+      text-transform:uppercase;
+      opacity:0;
+      animation:fadeUp 0.8s ease 2.3s forwards;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(12px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* Loading bar at bottom */
+    .loading-bar-wrap {
+      position:fixed; bottom:0; left:0; right:0;
+      height:3px;
+      background:rgba(0,200,255,0.1);
+    }
+    .loading-bar {
+      height:100%;
+      width:0;
+      background:linear-gradient(90deg, #00c8ff, #00e676);
+      box-shadow:0 0 12px rgba(0,200,255,0.6);
+      animation:loadFill 4s linear 0.3s forwards;
+    }
+    @keyframes loadFill {
+      from { width:0; }
+      to   { width:100%; }
+    }
+
+    /* Skip button */
+    .skip-btn {
+      position:fixed; bottom:24px; right:20px;
+      font-family:'Share Tech Mono', monospace, Arial;
+      font-size:0.72rem;
+      letter-spacing:2px;
+      color:#3a4d5c;
+      background:none;
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:20px;
+      padding:8px 18px;
+      cursor:pointer;
+      opacity:0;
+      animation:fadeUp 0.5s ease 0.9s forwards;
+      transition:color 0.2s, border-color 0.2s;
+      z-index:10;
+    }
+    .skip-btn:hover { color:#00c8ff; border-color:rgba(0,200,255,0.4); }
+
+    /* Fade-out overlay */
+    .fade-out {
+      position:fixed; inset:0;
+      background:#080b12;
+      opacity:0; pointer-events:none; z-index:999;
+    }
+    .fade-out.active { animation:fadeToSite 0.55s ease forwards; }
+    @keyframes fadeToSite { to { opacity:1; } }
+  </style>
+</head>
+<body>
+
+  <div class="splash" id="splash">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+
+    <div class="logo-wrap">
+      <img src="logo-armrdata.png" alt="ArmrData Logo" class="logo-img"/>
+      <div class="brand-row">
+        <div class="brand-name">
+          <span class="armr">Armr</span><span class="data">Data</span>
+        </div>
+      </div>
+      <div class="slogan">Securing your dataworld!</div>
+    </div>
+  </div>
+
+  <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
+  <button class="skip-btn" id="skipBtn">SKIP →</button>
+  <div class="fade-out" id="fadeOut"></div>
+
+  <script>
+    var REDIRECT = "index.html";
+    var DELAY    = 4300;
+
+    function goSite() {
+      var el = document.getElementById('fadeOut');
+      el.classList.add('active');
+      setTimeout(function(){ window.location.href = REDIRECT; }, 520);
+    }
+
+    document.getElementById('skipBtn').addEventListener('click', goSite);
+    setTimeout(goSite, DELAY);
+  </script>
+</body>
+</html>
+

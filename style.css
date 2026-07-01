@@ -1,0 +1,468 @@
+/* ============================================
+   ArmrData — style.css — Fichye Global
+   ============================================ */
+
+/* ── VARIAB ── */
+:root {
+  --bg:      #080b12;
+  --surface: #0f1520;
+  --nav:     #0f1520;
+  --cyan:    #00c8ff;
+  --green:   #00e676;
+  --gold:    #ffd700;
+  --red:     #c0392b;
+  --white:   #f0f0f0;
+  --muted:   #5a6a7a;
+  --border:  #1a2535;
+}
+
+/* ── RESET ── */
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── NAV ── */
+nav {
+  background:var(--nav);
+  border-radius:0 0 20px 20px;
+  padding:18px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  box-shadow:0 4px 20px rgba(0,0,0,0.6);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.nav-brand {
+  font-family:'Share Tech Mono',monospace;
+  color:#fff;
+  font-size:1.1rem;
+  letter-spacing:3px;
+  text-decoration:none;
+  text-transform:uppercase;
+}
+
+.nav-right {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.hamburger {
+  background:none;
+  border:none;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:4px;
+}
+
+.hamburger span {
+  display:block;
+  width:26px;
+  height:2px;
+  background:#d0d0d0;
+  border-radius:2px;
+}
+
+.nav-links {
+  list-style:none;
+  display:none;
+  flex-direction:column;
+  gap:2px;
+  padding-top:10px;
+  width:100%;
+  border-top:1px solid var(--border);
+  margin-top:10px;
+}
+
+.nav-links.open { display:flex; }
+
+.nav-links a {
+  display:block;
+  color:#c8c8c8;
+  text-decoration:none;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.95rem;
+  padding:10px 6px;
+  border-radius:6px;
+  transition:color 0.2s, background 0.2s;
+}
+
+.nav-links a:hover {
+  color:#fff;
+  background:rgba(255,255,255,0.06);
+}
+
+.nav-links a.active { color:var(--cyan); }
+
+/* ── LANG SWITCHER ── */
+.lang-switcher { position:relative; }
+
+.lang-btn {
+  background:none;
+  border:1px solid rgba(0,200,255,0.3);
+  border-radius:20px;
+  color:var(--cyan);
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.75rem;
+  padding:5px 12px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  transition:background 0.2s;
+}
+
+.lang-btn:hover { background:rgba(0,200,255,0.08); }
+
+.lang-menu {
+  display:none;
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  background:#0f1a2a;
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  min-width:160px;
+  z-index:200;
+  box-shadow:0 8px 24px rgba(0,0,0,0.5);
+}
+
+.lang-menu.open { display:block; }
+
+.lang-option {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 16px;
+  cursor:pointer;
+  font-size:0.85rem;
+  color:#c8c8c8;
+  transition:background 0.2s;
+  width:100%;
+  background:none;
+  border:none;
+  text-align:left;
+}
+
+.lang-option:hover { background:rgba(0,200,255,0.08); color:#fff; }
+.lang-option.active { color:var(--cyan); }
+.lang-flag { font-size:1rem; }
+
+/* ── HERO JENERAL ── */
+.hero {
+  padding:48px 24px 36px;
+  border-bottom:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero::before {
+  content:'';
+  position:absolute;
+  top:-60px; left:50%;
+  transform:translateX(-50%);
+  width:300px; height:300px;
+  background:radial-gradient(circle,rgba(0,200,255,0.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+.hero-eyebrow {
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.65rem;
+  letter-spacing:4px;
+  color:var(--cyan);
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+
+.hero h1 {
+  font-size:2rem;
+  font-weight:700;
+  line-height:1.2;
+  margin-bottom:12px;
+}
+
+.hero h1 span { color:var(--cyan); }
+
+.hero p {
+  font-size:0.9rem;
+  line-height:1.75;
+  color:#6a7d90;
+}
+
+/* ── KART JENERAL ── */
+.card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px 20px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color 0.2s, transform 0.2s;
+}
+
+.card::before {
+  content:'';
+  position:absolute;
+  top:0; left:0;
+  width:3px; height:100%;
+  background:linear-gradient(180deg,var(--cyan),transparent);
+}
+
+.card:hover {
+  border-color:rgba(0,200,255,0.3);
+  transform:translateY(-2px);
+}
+
+/* ── BOUTON ── */
+.btn-primary {
+  display:block;
+  text-align:center;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.85rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#000;
+  background:var(--cyan);
+  border:none;
+  border-radius:30px;
+  padding:15px;
+  cursor:pointer;
+  text-decoration:none;
+  font-weight:700;
+  box-shadow:0 0 20px rgba(0,200,255,0.3);
+  transition:opacity 0.2s;
+}
+
+.btn-primary:hover { opacity:0.85; }
+
+.btn-secondary {
+  display:block;
+  text-align:center;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.85rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--cyan);
+  background:transparent;
+  border:1px solid rgba(0,200,255,0.4);
+  border-radius:30px;
+  padding:14px;
+  cursor:pointer;
+  text-decoration:none;
+  transition:background 0.2s;
+}
+
+.btn-secondary:hover { background:rgba(0,200,255,0.08); }
+
+.btn-green {
+  display:block;
+  width:100%;
+  text-align:center;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.85rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#000;
+  background:var(--green);
+  border:none;
+  border-radius:30px;
+  padding:15px;
+  cursor:pointer;
+  font-weight:700;
+  transition:opacity 0.2s;
+}
+
+.btn-green:hover { opacity:0.9; }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.88);
+  z-index:200;
+  overflow-y:auto;
+  padding:20px 0;
+}
+
+.modal-overlay.open { display:block; }
+
+.modal {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  margin:0 auto;
+  max-width:680px;
+  width:calc(100% - 32px);
+  padding:32px 24px;
+  position:relative;
+}
+
+.modal::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  border-radius:20px 20px 0 0;
+}
+
+.modal-close {
+  position:absolute;
+  top:16px; right:16px;
+  background:none;
+  border:none;
+  color:var(--muted);
+  font-size:1.4rem;
+  cursor:pointer;
+}
+
+.modal-close:hover { color:var(--white); }
+
+/* ── FÒM ── */
+.form-group { margin-bottom:12px; }
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width:100%;
+  background:#060910;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:13px 16px;
+  color:var(--white);
+  font-family:'Inter',sans-serif;
+  font-size:0.88rem;
+  outline:none;
+  transition:border-color 0.2s;
+  resize:none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder { color:var(--muted); }
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color:var(--cyan); }
+
+.form-group select {
+  cursor:pointer;
+  appearance:none;
+}
+
+.form-group select option { background:#0a0f1a; color:var(--white); }
+
+/* ── FOOTER ── */
+footer {
+  border-top:1px solid var(--border);
+  padding:28px 24px;
+  text-align:center;
+  margin-top:40px;
+}
+
+.footer-brand {
+  font-family:'Share Tech Mono',monospace;
+  font-size:1rem;
+  letter-spacing:2px;
+  color:#fff;
+  margin-bottom:6px;
+}
+
+.footer-tag { font-size:0.8rem; color:var(--muted); }
+.footer-tag span { color:var(--cyan); }
+
+/* ── SEKSON LABEL ── */
+.section-label {
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.65rem;
+  letter-spacing:3px;
+  color:var(--cyan);
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+
+/* ── PRICE NOTE ── */
+.price-note {
+  background:rgba(0,200,255,0.05);
+  border-left:3px solid var(--cyan);
+  border-radius:0 8px 8px 0;
+  padding:12px 16px;
+  margin-bottom:20px;
+  font-size:0.85rem;
+  color:#90caf9;
+}
+
+.price-note strong {
+  color:var(--cyan);
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.75rem;
+  letter-spacing:1px;
+  display:block;
+  margin-bottom:4px;
+}
+
+/* ── CTA EBOOK ── */
+.cta-ebook {
+  margin:0 24px 40px;
+  background:linear-gradient(135deg,#0a1a28,#0f2535);
+  border:1px solid rgba(0,200,255,0.2);
+  border-radius:16px;
+  padding:28px 24px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.cta-ebook::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+}
+
+.cta-ebook h3 {
+  font-size:1.1rem;
+  font-weight:700;
+  color:var(--white);
+  margin-bottom:8px;
+}
+
+.cta-ebook p {
+  font-size:0.83rem;
+  color:#6a7d90;
+  line-height:1.65;
+  margin-bottom:20px;
+}
+
+.cta-btn {
+  display:inline-block;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.8rem;
+  letter-spacing:1px;
+  color:#000;
+  background:var(--green);
+  border-radius:30px;
+  padding:12px 28px;
+  text-decoration:none;
+  font-weight:700;
+  transition:opacity 0.2s;
+}
+
+.cta-btn:hover { opacity:0.85; }
+

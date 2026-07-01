@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArmrData — Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .filters { padding:20px 24px 0; display:flex; gap:8px; flex-wrap:wrap; }
+    .tag { font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; padding:5px 12px; border-radius:20px; border:1px solid var(--border); color:var(--muted); cursor:pointer; transition:all 0.2s; }
+    .tag.active { border-color:var(--cyan); color:var(--cyan); background:rgba(0,200,255,0.06); }
+
+    .articles { padding:20px 24px 40px; display:flex; flex-direction:column; gap:16px; }
+    .article-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:22px 20px; position:relative; overflow:hidden; transition:border-color 0.3s,transform 0.2s; cursor:pointer; }
+    .article-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:linear-gradient(180deg,var(--cyan),transparent); }
+    .article-card:hover { border-color:rgba(0,200,255,0.3); transform:translateY(-2px); }
+    .card-meta { display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+    .card-tag { font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--cyan); background:rgba(0,200,255,0.08); border:1px solid rgba(0,200,255,0.2); padding:2px 8px; border-radius:4px; }
+    .card-date { font-family:'Share Tech Mono',monospace; font-size:0.6rem; color:var(--muted); letter-spacing:1px; }
+    .article-card h2 { font-size:1.05rem; font-weight:700; color:var(--cyan); margin-bottom:8px; line-height:1.3; }
+    .article-card p { font-size:0.85rem; color:#6a7d90; line-height:1.65; margin-bottom:16px; }
+    .read-btn { display:inline-flex; align-items:center; gap:6px; font-family:'Share Tech Mono',monospace; font-size:0.75rem; letter-spacing:1px; color:var(--bg); background:var(--cyan); border:none; border-radius:30px; padding:9px 20px; cursor:pointer; text-decoration:none; transition:opacity 0.2s; }
+    .read-btn:hover { opacity:0.85; }
+
+    .modal-eyebrow { font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:3px; color:var(--cyan); text-transform:uppercase; margin-bottom:8px; }
+    .modal-meta { font-family:'Share Tech Mono',monospace; font-size:0.68rem; color:var(--muted); margin-bottom:20px; line-height:1.8; }
+    .modal h1 { font-size:1.4rem; font-weight:700; color:var(--white); line-height:1.3; margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:16px; }
+    .modal-body { font-size:0.92rem; line-height:1.8; color:#b0bec5; }
+    .modal-body p { margin-bottom:14px; }
+    .modal-body h3 { font-size:1rem; font-weight:700; color:var(--cyan); margin:24px 0 10px; font-family:'Share Tech Mono',monospace; letter-spacing:1px; }
+    .modal-body ul { padding-left:20px; margin-bottom:14px; }
+    .modal-body ul li { margin-bottom:6px; }
+    .modal-body .konsèy { background:rgba(0,200,255,0.05); border-left:3px solid var(--cyan); border-radius:0 8px 8px 0; padding:12px 16px; margin:10px 0 18px; font-size:0.85rem; color:#90caf9; }
+    .modal-body .konsèy strong { color:var(--cyan); font-family:'Share Tech Mono',monospace; font-size:0.75rem; letter-spacing:1px; display:block; margin-bottom:4px; }
+    .modal-body .alèt { background:rgba(0,200,255,0.05); border-left:3px solid var(--cyan); border-radius:0 8px 8px 0; padding:16px; margin:16px 0; font-size:0.9rem; color:#90caf9; font-style:italic; }
+    .modal-body .ebook-cta { background:linear-gradient(135deg,#0a1a28,#0f2535); border:1px solid rgba(0,200,255,0.2); border-radius:12px; padding:20px; margin-top:20px; text-align:center; }
+    .modal-body .ebook-cta p { color:#6a7d90; margin-bottom:12px; }
+    .modal-body .ebook-cta a { font-family:'Share Tech Mono',monospace; font-size:0.78rem; color:var(--bg); background:var(--cyan); border-radius:30px; padding:9px 22px; text-decoration:none; display:inline-block; }
+    .modal-footer { margin-top:28px; padding-top:16px; border-top:1px solid var(--border); font-family:'Share Tech Mono',monospace; font-size:0.75rem; color:var(--cyan); text-align:center; letter-spacing:2px; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="index.html" data-i18n="nav_brand">ArmrData</a>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn" onclick="toggleLangMenu()">🌐 <span id="currentLang">KR</span></button>
+        <div class="lang-menu" id="langMenu">
+          <button class="lang-option" data-lang="ht"><span class="lang-flag">🇭🇹</span> Kreyòl</button>
+          <button class="lang-option" data-lang="fr"><span class="lang-flag">🇫🇷</span> Français</button>
+          <button class="lang-option" data-lang="en"><span class="lang-flag">🇺🇸</span> English</button>
+        </div>
+      </div>
+      <button class="hamburger" id="burger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" data-i18n="nav_akèy">Akèy</a></li>
+      <li><a href="apropos.html" data-i18n="nav_apropos">À Propos</a></li>
+      <li><a href="sevis.html" data-i18n="nav_sevis">Sèvis</a></li>
+      <li><a href="ebook.html" data-i18n="nav_ebook">E-Book</a></li>
+      <li><a href="blog.html" class="active" data-i18n="nav_blog">Blog</a></li>
+      <li><a href="afilyasyon.html" data-i18n="nav_afilyasyon">Afilyasyon</a></li>
+      <li><a href="kontak.html" data-i18n="nav_kontak">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-eyebrow" data-i18n="hero_eyebrow">// Blog</p>
+    <h1><span data-i18n="hero_title1">Sant Konesans</span><br><span data-i18n="hero_title2">ArmrData</span></h1>
+    <p data-i18n="hero_desc">Byenveni nan Sant Konesans ArmrData. Objektif nou se ede moun ak antrepriz yo konprann pi byen menas dijital yo epi devlope bon abitid sekirite.</p>
+  </section>
+
+  <div class="filters">
+    <span class="tag active" data-i18n="tag_tout">Tout</span>
+    <span class="tag" data-i18n="tag_modpas">Modpas</span>
+    <span class="tag" data-i18n="tag_phishing">Phishing</span>
+    <span class="tag" data-i18n="tag_facebook">Facebook</span>
+    <span class="tag" data-i18n="tag_rezo">Rezo</span>
+  </div>
+
+  <div class="articles">
+    <div class="article-card" onclick="openModal('modal1')">
+      <div class="card-meta">
+        <span class="card-tag" data-i18n="art1_tag">Rezo Sosyal</span>
+        <span class="card-date" data-i18n="art1_date">Jen 2026</span>
+      </div>
+      <h2 data-i18n="art1_title">5 Erè Sekirite Moun Fè Sou Facebook</h2>
+      <p data-i18n="art1_desc">Dekouvri erè ki pi komen itilizatè Facebook yo fè epi kijan pou evite yo.</p>
+      <a class="read-btn" data-i18n="read_btn" onclick="event.stopPropagation();openModal('modal1')">Li Atik la →</a>
+    </div>
+    <div class="article-card" onclick="openModal('modal2')">
+      <div class="card-meta">
+        <span class="card-tag" data-i18n="art2_tag">Modpas</span>
+        <span class="card-date" data-i18n="art2_date">Jen 2026</span>
+      </div>
+      <h2 data-i18n="art2_title">Kijan Pou Kreye Yon Modpas Fò An 2026</h2>
+      <p data-i18n="art2_desc">Konprann enpòtans yon modpas fò ak risk ki genyen lè yon modpas fèb.</p>
+      <a class="read-btn" data-i18n="read_btn" onclick="event.stopPropagation();openModal('modal2')">Li Atik la →</a>
+    </div>
+    <div class="article-card" onclick="openModal('modal3')">
+      <div class="card-meta">
+        <span class="card-tag" data-i18n="art3_tag">Phishing</span>
+        <span class="card-date" data-i18n="art3_date">Jen 2026</span>
+      </div>
+      <h2 data-i18n="art3_title">Phishing: Pi Gwo Pyèj Dijital Jodi a</h2>
+      <p data-i18n="art3_desc">Aprann kijan atakan yo itilize phishing pou twonpe viktim yo ak kijan pou pwoteje tèt ou.</p>
+      <a class="read-btn" data-i18n="read_btn" onclick="event.stopPropagation();openModal('modal3')">Li Atik la →</a>
+    </div>
+  </div>
+
+  <div class="cta-ebook">
+    <h3 data-i18n="cta_title">Ale Pi Lwen Ak Blendaj Dijital</h3>
+    <p data-i18n="cta_desc">Atik gratis yo se sèlman yon entwodiksyon.</p>
+    <a href="ebook.html" class="cta-btn" data-i18n="cta_btn">Dekouvri Ebook la</a>
+  </div>
+
+  <footer>
+    <p class="footer-brand">🛡️ ArmrData</p>
+    <p class="footer-tag"><span data-i18n="footer_tag">Securing your dataworld!</span></p>
+  </footer>
+
+  <!-- MODAL 1 — Facebook -->
+  <div class="modal-overlay" id="modal1">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal1')">✕</button>
+      <p class="modal-eyebrow" data-modal-i18n="m1_eyebrow">Rezo Sosyal</p>
+      <p class="modal-meta" data-modal-i18n="m1_meta">📅 Jen 2026 • ✍️ Ekip ArmrData • ⏱️ 4 min lekti</p>
+      <h1 data-modal-i18n="m1_title">5 Erè Sekirite Moun Fè Sou Facebook</h1>
+      <div class="modal-body">
+        <p data-modal-i18n="m1_intro">Facebook se youn nan rezo sosyal ki pi itilize sou planèt la...</p>
+        <p data-modal-i18n="m1_intro2">Men 5 erè ki pi komen yo ak fason pou evite yo.</p>
+        <h3 data-modal-i18n="m1_h1">1. Itilize menm modpas la pou tout kont yo</h3>
+        <p data-modal-i18n="m1_p1">Anpil moun itilize menm modpas la...</p>
+        <p data-modal-i18n="m1_p2">Si yon sèl sit entènèt sibi yon vyolasyon...</p>
+        <div class="konsèy"><strong data-modal-i18n="konsèy_label">Konsèy ArmrData</strong><span data-modal-i18n="m1_k1">Sèvi ak yon modpas diferan...</span></div>
+        <h3 data-modal-i18n="m1_h2">2. Pa aktive verifikasyon an de etap (2FA)</h3>
+        <p data-modal-i18n="m1_p3">Yon modpas fò enpòtan...</p>
+        <p data-modal-i18n="m1_p4">Se la verifikasyon an de etap la antre an jwèt...</p>
+        <div class="konsèy"><strong data-modal-i18n="konsèy_label">Konsèy ArmrData</strong><span data-modal-i18n="m1_k2">Itilize Google Authenticator...</span></div>
+        <h3 data-modal-i18n="m1_h3">3. Aksepte demann zanmi nenpòt moun</h3>
+        <p data-modal-i18n="m1_p5">Fo pwofil yo se youn nan zouti...</p>
+        <p data-modal-i18n="m1_p6">Yon moun ka kreye yon pwofil...</p>
+        <div class="konsèy"><strong data-modal-i18n="konsèy_label">Konsèy ArmrData</strong><span data-modal-i18n="m1_k3">Verifye pwofil yon moun...</span></div>
+        <h3 data-modal-i18n="m1_h4">4. Klike sou nenpòt lyen yo voye ba ou</h3>
+        <p data-modal-i18n="m1_p7">Atak phishing yo souvan kòmanse...</p>
+        <p data-modal-i18n="m1_p8">Ou ka resevwa yon mesaj...</p>
+        <p data-modal-i18n="m1_p9">Lè ou klike, yo ka mennen ou...</p>
+        <div class="konsèy"><strong data-modal-i18n="konsèy_label">Konsèy ArmrData</strong><span data-modal-i18n="m1_k4">Toujou verifye adrès sit la...</span></div>
+        <h3 data-modal-i18n="m1_h5">5. Pataje twòp enfòmasyon pèsonèl</h3>
+        <p data-modal-i18n="m1_p10">Dat nesans, nimewo telefòn...</p>
+        <p data-modal-i18n="m1_p11">Mwens enfòmasyon piblik ou bay...</p>
+        <div class="konsèy"><strong data-modal-i18n="konsèy_label">Konsèy ArmrData</strong><span data-modal-i18n="m1_k5">Revize paramèt vi prive Facebook ou...</span></div>
+        <h3 data-modal-i18n="m1_hkonk">Konklizyon</h3>
+        <p data-modal-i18n="m1_konk1">Sekirite dijital pa depann sèlman de teknoloji...</p>
+        <p data-modal-i18n="m1_konk2">Lè ou evite 5 erè sa yo...</p>
+      </div>
+      <div class="modal-footer">🛡️ ArmrData — Securing your dataworld!</div>
+    </div>
+  </div>
+
+  <!-- MODAL 2 — Modpas -->
+  <div class="modal-overlay" id="modal2">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal2')">✕</button>
+      <p class="modal-eyebrow" data-modal-i18n="m2_eyebrow">Modpas</p>
+      <p class="modal-meta" data-modal-i18n="m2_meta">📅 Jen 2026 • ✍️ Ekip ArmrData • ⏱️ 3 min lekti</p>
+      <h1 data-modal-i18n="m2_title">Kijan Pou Kreye Yon Modpas Fò An 2026</h1>
+      <div class="modal-body">
+        <p data-modal-i18n="m2_intro">Modpas ou se premye pòt...</p>
+        <h3 data-modal-i18n="m2_h1">Poukisa yon Modpas Fò Enpòtan?</h3>
+        <p data-modal-i18n="m2_p1">Yon modpas fò ede pwoteje...</p>
+        <h3 data-modal-i18n="m2_h2">Danje Yon Modpas Fèb</h3>
+        <p data-modal-i18n="m2_p2">Lè yon modpas twò senp...</p>
+        <ul>
+          <li data-modal-i18n="m2_li1">Vòl idantite</li>
+          <li data-modal-i18n="m2_li2">Pèt aksè ak kont yo</li>
+          <li data-modal-i18n="m2_li3">Fwod finansye</li>
+          <li data-modal-i18n="m2_li4">Vòl done pèsonèl</li>
+          <li data-modal-i18n="m2_li5">Domaj pou repitasyon yon biznis</li>
+        </ul>
+        <h3 data-modal-i18n="m2_hkonk">Konklizyon</h3>
+        <p data-modal-i18n="m2_konk">Kreye yon modpas fò pa yon kestyon chans...</p>
+        <div class="ebook-cta">
+          <p data-modal-i18n="m2_ebook">📖 Blendaj Dijital</p>
+          <a href="ebook.html" data-modal-i18n="m2_ebook_btn">Dekouvri Ebook la</a>
+        </div>
+      </div>
+      <div class="modal-footer">🛡️ ArmrData — Securing your dataworld!</div>
+    </div>
+  </div>
+
+  <!-- MODAL 3 — Phishing -->
+  <div class="modal-overlay" id="modal3">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal3')">✕</button>
+      <p class="modal-eyebrow" data-modal-i18n="m3_eyebrow">Phishing</p>
+      <p class="modal-meta" data-modal-i18n="m3_meta">📅 Jen 2026 • ✍️ Ekip ArmrData • ⏱️ 4 min lekti</p>
+      <h1 data-modal-i18n="m3_title">Phishing: Pi Gwo Pyèj Dijital Jodi a</h1>
+      <div class="modal-body">
+        <p data-modal-i18n="m3_intro">Nan mond dijital jodi a...</p>
+        <h3 data-modal-i18n="m3_h1">Poukisa Phishing Danjere?</h3>
+        <p data-modal-i18n="m3_p1">Kontrèman ak anpil lòt atak...</p>
+        <ul>
+          <li data-modal-i18n="m3_li1">Facebook</li>
+          <li data-modal-i18n="m3_li2">Google</li>
+          <li data-modal-i18n="m3_li3">Bank ou</li>
+          <li data-modal-i18n="m3_li4">Yon zanmi</li>
+          <li data-modal-i18n="m3_li5">Yon antrepriz ou fè konfyans</li>
+        </ul>
+        <p data-modal-i18n="m3_p2">Se poutèt sa anpil moun tonbe nan pyèj la...</p>
+        <h3 data-modal-i18n="m3_h2">Ki Risk Ki Genyen?</h3>
+        <p data-modal-i18n="m3_p3">Yon atak phishing reyisi kapab lakoz:</p>
+        <ul>
+          <li data-modal-i18n="m3_li6">Vòl modpas</li>
+          <li data-modal-i18n="m3_li7">Pèt aksè ak kont yo</li>
+          <li data-modal-i18n="m3_li8">Fwod finansye</li>
+          <li data-modal-i18n="m3_li9">Vòl done pèsonèl</li>
+          <li data-modal-i18n="m3_li10">Konpwomisyon yon antrepriz antye</li>
+        </ul>
+        <h3 data-modal-i18n="m3_h3">Yon Teknik Senp Pou Pwoteje Tèt Ou</h3>
+        <p data-modal-i18n="m3_p4">Anvan ou klike sou nenpòt lyen...</p>
+        <div class="alèt" data-modal-i18n="m3_alèt">Kanpe. Li mesaj la ankò. Verifye kiyès ki voye li.</div>
+        <p data-modal-i18n="m3_p5">Si mesaj la ap mete presyon sou ou...</p>
+        <h3 data-modal-i18n="m3_hkonk">Konklizyon</h3>
+        <p data-modal-i18n="m3_konk">Teknik sa a kapab ede anpil...</p>
+        <ul>
+          <li data-modal-i18n="m3_li11">Kijan pou rekonèt yon move lyen</li>
+          <li data-modal-i18n="m3_li12">Teknik Hover la</li>
+          <li data-modal-i18n="m3_li13">Kijan pou verifye imèl yo</li>
+          <li data-modal-i18n="m3_li14">Siy ki montre yon sit entènèt se yon fo sit</li>
+          <li data-modal-i18n="m3_li15">Metòd pwofesyonèl pou pwoteje biznis ou</li>
+        </ul>
+        <div class="ebook-cta">
+          <p data-modal-i18n="m3_ebook">📖 Blendaj Dijital</p>
+          <a href="ebook.html" data-modal-i18n="m3_ebook_btn">Dekouvri Ebook la</a>
+        </div>
+      </div>
+      <div class="modal-footer">🛡️ ArmrData — Securing your dataworld!</div>
+    </div>
+  </div>
+
+  <script src="lang.js"></script>
+  <script>
+    document.getElementById('burger').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('#navLinks a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+      document.body.style.overflow = 'hidden';
+      applyBlogModals();
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) closeModal(overlay.id);
+      });
+    });
+    var langCodes = { ht:'KR', fr:'FR', en:'EN' };
+    function updateLangDisplay() {
+      document.getElementById('currentLang').textContent = langCodes[getLang()] || 'KR';
+    }
+    initLangSwitcher('blog');
+    updateLangDisplay();
+    document.querySelectorAll('.lang-option').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        updateLangDisplay();
+        applyBlogModals();
+      });
+    });
+    applyBlogModals();
+  </script>
+
+</body>
+</html>

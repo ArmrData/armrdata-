@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArmrData — À Propos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .hero { text-align:left; }
+    .hero h1 span { color:var(--cyan); }
+    .hero-eyebrow { color:var(--cyan); }
+
+    .sections { padding:32px 24px; display:flex; flex-direction:column; gap:24px; }
+    .card { border-left:3px solid var(--cyan); border-radius:12px; }
+    .card::before { display:none; }
+    .card-label { font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:3px; color:var(--cyan); text-transform:uppercase; margin-bottom:8px; }
+    .card h2 { font-size:1.15rem; font-weight:600; margin-bottom:10px; }
+    .card p { font-size:0.9rem; color:#9aa0b2; line-height:1.7; }
+
+    .values { padding:0 24px 40px; }
+    .values-title { font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:3px; color:var(--cyan); text-transform:uppercase; margin-bottom:16px; }
+    .values-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .value-item { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 14px; display:flex; align-items:center; gap:10px; }
+    .value-dot { width:8px; height:8px; background:var(--cyan); border-radius:50%; flex-shrink:0; }
+    .value-item span { font-size:0.88rem; font-weight:500; color:#d0d4e0; }
+
+    footer .footer-tag span { color:var(--cyan); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="index.html" data-i18n="nav_brand">ArmrData</a>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn" onclick="toggleLangMenu()">🌐 <span id="currentLang">KR</span></button>
+        <div class="lang-menu" id="langMenu">
+          <button class="lang-option" data-lang="ht"><span class="lang-flag">🇭🇹</span> Kreyòl</button>
+          <button class="lang-option" data-lang="fr"><span class="lang-flag">🇫🇷</span> Français</button>
+          <button class="lang-option" data-lang="en"><span class="lang-flag">🇺🇸</span> English</button>
+        </div>
+      </div>
+      <button class="hamburger" id="burger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" data-i18n="nav_akèy">Akèy</a></li>
+      <li><a href="apropos.html" class="active" data-i18n="nav_apropos">À Propos</a></li>
+      <li><a href="sevis.html" data-i18n="nav_sevis">Sèvis</a></li>
+      <li><a href="ebook.html" data-i18n="nav_ebook">E-Book</a></li>
+      <li><a href="blog.html" data-i18n="nav_blog">Blog</a></li>
+      <li><a href="afilyasyon.html" data-i18n="nav_afilyasyon">Afilyasyon</a></li>
+      <li><a href="kontak.html" data-i18n="nav_kontak">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-eyebrow" data-i18n="hero_eyebrow">À Propos</p>
+    <h1><span data-i18n="hero_title1">Pwoteje done ou —</span><br><span data-i18n="hero_title2">se misyon nou.</span></h1>
+    <p data-i18n="hero_desc">ArmrData se yon inisyativ ki fèt pou ede moun ak antrepriz yo pwoteje done yo, amelyore sekirite dijital yo epi devlope bon pratik cybersécurité nan yon mond kote menas dijital yo ap ogmante chak jou.</p>
+  </section>
+
+  <div class="sections">
+    <div class="card">
+      <p class="card-label" data-i18n="misyon_label">Misyon Nou</p>
+      <h2 data-i18n="misyon_title">Sekirite pou tout moun</h2>
+      <p data-i18n="misyon_desc">Ede moun ak biznis yo pwoteje enfòmasyon yo kont menas dijital modèn yo — aksesib, senp, efikas.</p>
+    </div>
+    <div class="card">
+      <p class="card-label" data-i18n="vizyon_label">Vizyon Nou</p>
+      <h2 data-i18n="vizyon_title">Referans Karayib la</h2>
+      <p data-i18n="vizyon_desc">Vin yon referans nan domèn cybersécurité nan Karayib la ak pi lwen toujou.</p>
+    </div>
+  </div>
+
+  <div class="values">
+    <p class="values-title" data-i18n="vale_title">Valè Nou Yo</p>
+    <div class="values-grid">
+      <div class="value-item"><div class="value-dot"></div><span data-i18n="vale1">Konfyans</span></div>
+      <div class="value-item"><div class="value-dot"></div><span data-i18n="vale2">Profesyonalis</span></div>
+      <div class="value-item"><div class="value-dot"></div><span data-i18n="vale3">Inovasyon</span></div>
+      <div class="value-item"><div class="value-dot"></div><span data-i18n="vale4">Entegrite</span></div>
+      <div class="value-item"><div class="value-dot"></div><span data-i18n="vale5">Pwoteksyon</span></div>
+    </div>
+  </div>
+
+  <footer>
+    <p class="footer-brand">🛡️ ArmrData</p>
+    <p class="footer-tag"><span data-i18n="footer_tag">Securing your dataworld!</span></p>
+  </footer>
+
+  <script src="lang.js"></script>
+  <script>
+    document.getElementById('burger').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('#navLinks a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+    var langCodes = { ht:'KR', fr:'FR', en:'EN' };
+    function updateLangDisplay() {
+      document.getElementById('currentLang').textContent = langCodes[getLang()] || 'KR';
+    }
+    initLangSwitcher('apropos');
+    updateLangDisplay();
+    document.querySelectorAll('.lang-option').forEach(function(btn) {
+      btn.addEventListener('click', function() { updateLangDisplay(); });
+    });
+  </script>
+
+</body>
+</html>

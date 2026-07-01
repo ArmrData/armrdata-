@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArmrData — Sèvis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .section { padding:28px 24px 0; }
+    .section-title { font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:3px; color:var(--cyan); text-transform:uppercase; margin-bottom:16px; }
+    .pake-grid { display:flex; flex-direction:column; gap:12px; margin-bottom:28px; }
+    .pake-btn { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px; cursor:pointer; text-align:left; transition:border-color 0.2s,transform 0.2s; position:relative; overflow:hidden; }
+    .pake-btn::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:linear-gradient(180deg,var(--cyan),transparent); }
+    .pake-btn:hover,.pake-btn.active { border-color:rgba(0,200,255,0.4); transform:translateX(4px); background:rgba(0,200,255,0.04); }
+    .pake-btn.active::before { background:var(--cyan); }
+    .pake-title { font-family:'Share Tech Mono',monospace; font-size:0.88rem; font-weight:700; color:var(--cyan); margin-bottom:6px; }
+    .pake-desc { font-size:0.82rem; color:#6a7d90; line-height:1.55; padding-right:24px; }
+    .pake-arrow { position:absolute; top:50%; right:16px; transform:translateY(-50%); color:var(--cyan); font-size:1.1rem; transition:transform 0.2s; }
+    .pake-btn.active .pake-arrow { transform:translateY(-50%) rotate(90deg); }
+    .pake-content { display:none; padding:0 0 28px; }
+    .pake-content.open { display:block; }
+    .service-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:22px 20px; margin-bottom:14px; position:relative; overflow:hidden; transition:border-color 0.2s; }
+    .service-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:linear-gradient(180deg,var(--cyan),transparent); }
+    .service-card:hover { border-color:rgba(0,200,255,0.3); }
+    .service-emoji { font-size:1.5rem; margin-bottom:8px; display:block; }
+    .service-title { font-size:1rem; font-weight:700; color:var(--cyan); margin-bottom:6px; }
+    .service-desc { font-size:0.85rem; color:#6a7d90; line-height:1.65; margin-bottom:8px; }
+    .service-price { font-size:0.8rem; color:#90caf9; background:rgba(0,200,255,0.06); border-left:2px solid var(--cyan); padding:8px 12px; border-radius:0 6px 6px 0; margin-bottom:10px; line-height:1.7; }
+    .service-price .price-row { display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; }
+    .service-price .price-label { color:var(--cyan); font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:1px; text-transform:uppercase; display:block; margin-bottom:4px; }
+    .db-badge { display:inline-flex; align-items:center; gap:5px; font-family:'Share Tech Mono',monospace; font-size:0.55rem; letter-spacing:1.5px; color:var(--muted); background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:4px; padding:2px 7px; margin-bottom:10px; }
+    .btn-learn { display:inline-flex; align-items:center; gap:6px; font-family:'Share Tech Mono',monospace; font-size:0.75rem; letter-spacing:1px; color:var(--cyan); background:rgba(0,200,255,0.08); border:1px solid rgba(0,200,255,0.3); border-radius:20px; padding:7px 16px; cursor:pointer; transition:all 0.2s; }
+    .btn-learn:hover { background:rgba(0,200,255,0.15); }
+    .konsiltasyon-card { background:linear-gradient(135deg,#0a1a28,#0f2535); border:1px solid rgba(0,200,255,0.25); border-radius:14px; padding:20px; margin-bottom:14px; }
+    .konsiltasyon-title { font-family:'Share Tech Mono',monospace; font-size:0.85rem; color:var(--cyan); font-weight:700; margin-bottom:12px; letter-spacing:1px; }
+    .konsiltasyon-price { font-size:0.85rem; color:#b0bec5; line-height:1.8; }
+    .konsiltasyon-price .k-row { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid var(--border); }
+    .konsiltasyon-price .k-row:last-child { border-bottom:none; }
+    .konsiltasyon-price .k-label { color:#90caf9; }
+    .konsiltasyon-price .k-val { color:var(--green); font-family:'Share Tech Mono',monospace; font-size:0.78rem; }
+    .devis-badge { background:rgba(0,200,255,0.06); border:1px solid rgba(0,200,255,0.2); border-radius:8px; padding:12px 14px; font-size:0.83rem; color:#90caf9; line-height:1.65; }
+    .meto-section { padding:0 24px 40px; }
+    .meto-title { font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:3px; color:var(--cyan); text-transform:uppercase; margin-bottom:16px; }
+    .meto-grid { display:flex; flex-direction:column; gap:12px; }
+    .meto-item { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px 20px; display:flex; align-items:flex-start; gap:14px; }
+    .meto-num { font-family:'Share Tech Mono',monospace; font-size:0.7rem; color:var(--bg); background:var(--cyan); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:700; margin-top:2px; }
+    .meto-name { font-size:0.9rem; font-weight:700; color:var(--white); margin-bottom:4px; }
+    .meto-desc { font-size:0.82rem; color:#6a7d90; line-height:1.55; }
+    .cta-bottom { margin:0 24px 40px; background:linear-gradient(135deg,#0a1a28,#0f2535); border:1px solid rgba(0,200,255,0.2); border-radius:16px; padding:28px 24px; text-align:center; position:relative; overflow:hidden; }
+    .cta-bottom::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--green),transparent); }
+    .cta-bottom h3 { font-size:1.15rem; font-weight:700; color:var(--white); margin-bottom:8px; }
+    .cta-bottom p { font-size:0.85rem; color:#6a7d90; line-height:1.65; margin-bottom:20px; }
+    .modal-eyebrow { font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:3px; color:var(--cyan); text-transform:uppercase; margin-bottom:6px; }
+    .modal h2 { font-size:1.3rem; font-weight:700; color:var(--white); margin-bottom:8px; }
+    .modal-desc { font-size:0.88rem; color:#6a7d90; line-height:1.7; margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+    .modal-price-block { margin-bottom:20px; }
+    .modal-price-title { font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:2px; color:var(--cyan); text-transform:uppercase; margin-bottom:8px; }
+    .modal-price-row { display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-radius:8px; margin-bottom:4px; background:rgba(0,200,255,0.04); border:1px solid var(--border); }
+    .modal-price-row .p-type { font-size:0.82rem; color:#b0bec5; }
+    .modal-price-row .p-val { font-family:'Share Tech Mono',monospace; font-size:0.78rem; color:var(--green); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html" data-i18n="nav_brand">ArmrData</a>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn" onclick="toggleLangMenu()">🌐 <span id="currentLang">KR</span></button>
+      <div class="lang-menu" id="langMenu">
+        <button class="lang-option" data-lang="ht"><span class="lang-flag">🇭🇹</span> Kreyòl</button>
+        <button class="lang-option" data-lang="fr"><span class="lang-flag">🇫🇷</span> Français</button>
+        <button class="lang-option" data-lang="en"><span class="lang-flag">🇺🇸</span> English</button>
+      </div>
+    </div>
+    <button class="hamburger" id="burger"><span></span><span></span><span></span></button>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" data-i18n="nav_akèy">Akèy</a></li>
+    <li><a href="apropos.html" data-i18n="nav_apropos">À Propos</a></li>
+    <li><a href="sevis.html" class="active" data-i18n="nav_sevis">Sèvis</a></li>
+    <li><a href="ebook.html" data-i18n="nav_ebook">E-Book</a></li>
+    <li><a href="blog.html" data-i18n="nav_blog">Blog</a></li>
+    <li><a href="afilyasyon.html" data-i18n="nav_afilyasyon">Afilyasyon</a></li>
+    <li><a href="kontak.html" data-i18n="nav_kontak">Kontak</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow" data-i18n="hero_eyebrow">// Sèvis</p>
+  <h1><span data-i18n="hero_title">Sèvis ArmrData</span></h1>
+  <p data-i18n="hero_desc">Nou ede moun, antrepriz ak òganizasyon pwoteje done yo kont menas dijital yo.</p>
+</section>
+
+<!-- PAKE YO -->
+<div class="section">
+  <p class="section-title" data-i18n="pake_label">// Chwazi Pake Ou</p>
+  <div class="pake-grid">
+
+    <!-- PAKE 1: ENDIVIDYÈL -->
+    <button class="pake-btn" onclick="togglePake('pake1',this)">
+      <div class="pake-title" data-i18n="pake1_title">👤 Pake Endividyèl (Sekirite Pèsonalite)</div>
+      <div class="pake-desc" data-i18n="pake1_desc">Ideyal pou moun ki vle pwoteje enfòmasyon prive yo, kont sosyal yo, ak telefòn yo.</div>
+      <span class="pake-arrow">→</span>
+    </button>
+    <div class="pake-content" id="pake1">
+
+      <!-- S7: Done Pèsonèl -->
+      <div class="service-card">
+        <span class="service-emoji">🛡️</span>
+        <div class="service-title" data-i18n="s7_title">Pwoteksyon Done Pèsonèl</div>
+        <div class="service-desc" data-i18n="s7_desc">Pwoteje enfòmasyon pèsonèl ou kont vòl ak fwod.</div>
+        <div class="service-price">
+          <span class="price-label" data-i18n="price_label">Pri Sèvis</span>
+          <span data-i18n="s7_price">À partir de $44.99 USD oswa 5 880 HTG</span>
+        </div>
+        <div><span class="db-badge">⬡ DB: sevis_done_pesonèl</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m7')">Aprann Plis →</button>
+      </div>
+
+      <!-- S8: Sekirite Aparèy -->
+      <div class="service-card">
+        <span class="service-emoji">📱</span>
+        <div class="service-title" data-i18n="s8_title">Sekirite Aparèy</div>
+        <div class="service-desc" data-i18n="s8_desc">Pwoteksyon telefòn, tablèt ak òdinatè.</div>
+        <div class="service-price">
+          <span class="price-label" data-i18n="price_label">Pri Sèvis</span>
+          <span data-i18n="s8_price">À partir de $35.00 USD oswa 4 500 HTG</span>
+        </div>
+        <div><span class="db-badge">⬡ DB: sevis_sekirite_aparèy</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m8')">Aprann Plis →</button>
+      </div>
+
+      <!-- S9: Sibèsekirite Pèsonèl -->
+      <div class="service-card">
+        <span class="service-emoji">🛡️</span>
+        <div class="service-title" data-i18n="s9_title">Sibèsekirite Pèsonèl</div>
+        <div class="service-desc" data-i18n="s9_desc">Pwoteksyon rezo, sistèm ak done pèsonèl ou yo.</div>
+        <div class="service-price">
+          <span class="price-label" data-i18n="price_label">Pri Sèvis</span>
+          <span data-i18n="s9_price">À partir de $50.00 USD oswa 6 500 HTG</span>
+        </div>
+        <div><span class="db-badge">⬡ DB: sevis_sibèsekirite_pesonèl</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m9')">Aprann Plis →</button>
+      </div>
+
+      <!-- S10: Tès Pen Pèsonèl -->
+      <div class="service-card">
+        <span class="service-emoji">🔍</span>
+        <div class="service-title" data-i18n="s10_title">Tès Penetrasyon Pèsonèl</div>
+        <div class="service-desc" data-i18n="s10_desc">Detekte feblès sekirite nan sistèm pèsonèl ou avan atakè yo.</div>
+        <div class="service-price">
+          <span class="price-label" data-i18n="price_label">Pri Sèvis</span>
+          <span data-i18n="s10_price">À partir de $99.99 USD oswa 13 000 HTG</span>
+        </div>
+        <div><span class="db-badge">⬡ DB: sevis_tes_pen_pesonèl</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m10')">Aprann Plis →</button>
+      </div>
+
+      <!-- Konsiltasyon Pake 1 -->
+      <div class="konsiltasyon-card">
+        <div class="konsiltasyon-title">💬 <span data-i18n="konsilt_title">Konsiltasyon Dijital</span></div>
+        <div class="konsiltasyon-price">
+          <div class="k-row">
+            <span class="k-label" data-i18n="konsilt_30min">30 minit</span>
+            <span class="k-val" data-i18n="konsilt_p1_30">$12.99 USD / 1 700 HTG</span>
+          </div>
+          <div class="k-row">
+            <span class="k-label" data-i18n="konsilt_1h">1 èdtan</span>
+            <span class="k-val" data-i18n="konsilt_p1_1h">$25.00 USD / 3 250 HTG</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAKE 2: PME -->
+    <button class="pake-btn" onclick="togglePake('pake2',this)">
+      <div class="pake-title" data-i18n="pake2_title">🏢 Pake PME (Ti ak Mwayen Antrepriz)</div>
+      <div class="pake-desc" data-i18n="pake2_desc">Ideyal pou biznis ki vle sekirize rezo yo ak enfòmasyon kliyan yo.</div>
+      <span class="pake-arrow">→</span>
+    </button>
+    <div class="pake-content" id="pake2">
+
+      <!-- S1: Sibèsekirite -->
+      <div class="service-card">
+        <span class="service-emoji">🛡️</span>
+        <div class="service-title" data-i18n="s1_title">Sibèsekirite</div>
+        <div class="service-desc" data-i18n="s1_desc">Pwoteksyon rezo, sistèm ak done sansib.</div>
+        <div class="service-price">
+          <span class="price-label" data-i18n="price_label">Pri Sèvis</span>
+          <span data-i18n="s1_price">À partir de $110.00 USD oswa 14 380 HTG</span>
+        </div>
+        <div><span class="db-badge">⬡ DB: sevis_sibèsekirite</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m1')">Aprann Plis →</button>
+      </div>
+
+      <!-- S2: Tès Penetrasyon -->
+      <div class="service-card">
+        <span class="service-emoji">🔍</span>
+        <div class="service-title" data-i18n="s2_title">Tès Penetrasyon</div>
+        <div class="service-desc" data-i18n="s2_desc">Detekte feblès sekirite yo avan atakè yo.</div>
+        <div class="service-price">
+          <span class="price-label" data-i18n="price_label">Pri Sèvis</span>
+          <span data-i18n="s2_price">À partir de $190.00 USD oswa 24 800 HTG</span>
+        </div>
+        <div><span class="db-badge">⬡ DB: sevis_tes_penetrasyon</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m2')">Aprann Plis →</button>
+      </div>
+
+      <!-- S3: Cloud -->
+      <div class="service-card">
+        <span class="service-emoji">☁️</span>
+        <div class="service-title" data-i18n="s3_title">Sekirite Cloud</div>
+        <div class="service-desc" data-i18n="s3_desc">Pwoteje enfrastrikti cloud ak sèvis dijital yo.</div>
+        <div class="service-price">
+          <span class="price-label" data-i18n="price_label">Pri Sèvis</span>
+          <span data-i18n="s3_price">À partir de $165.00 USD oswa 21 500 HTG</span>
+        </div>
+        <div><span class="db-badge">⬡ DB: sevis_sekirite_cloud</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m3')">Aprann Plis →</button>
+      </div>
+
+      <!-- S4: Analiz Dijital -->
+      <div class="service-card">
+        <span class="service-emoji">🕵️</span>
+        <div class="service-title" data-i18n="s4_title">Analiz Dijital</div>
+        <div class="service-desc" data-i18n="s4_desc">Ankèt sou ensidan enfòmatik ak rekiperasyon prèv.</div>
+        <div class="service-price">
+          <span class="price-label" data-i18n="price_label">Pri Sèvis</span>
+          <div class="price-row"><span data-i18n="s4_p_basic">Analiz debaz:</span><strong>$175.00 USD / 22 800 HTG</strong></div>
+          <div class="price-row"><span data-i18n="s4_p_full">Ankèt konplè:</span><strong>$310.00 USD+ / 40 500+ HTG</strong></div>
+          <div class="price-row"><span data-i18n="s4_p_special">Ka espesyal:</span><strong data-i18n="sur_devis">Sou devis</strong></div>
+        </div>
+        <div><span class="db-badge">⬡ DB: sevis_analiz_dijital</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m4')">Aprann Plis →</button>
+      </div>
+
+      <!-- S5: Fòmasyon -->
+      <div class="service-card">
+        <span class="service-emoji">🎓</span>
+        <div class="service-title" data-i18n="s5_title">Fòmasyon</div>
+        <div class="service-desc" data-i18n="s5_desc">Fòmasyon espesyalize pou ekip ak antrepriz sou sekirite dijital.</div>
+        <div class="service-price">
+          <span class="price-label" data-i18n="price_label">Pri Sèvis</span>
+          <div class="price-row"><span data-i18n="s5_p_group">Gwoup 10–20 moun:</span><strong>$250.00 USD / 32 600 HTG</strong></div>
+          <div class="price-row"><span data-i18n="s5_p_corp">Antrepriz:</span><strong>$500.00 USD / 65 360 HTG</strong></div>
+        </div>
+        <div><span class="db-badge">⬡ DB: sevis_fomasyon</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m5')">Aprann Plis →</button>
+      </div>
+
+      <!-- S6: Odit -->
+      <div class="service-card">
+        <span class="service-emoji">🔎</span>
+        <div class="service-title" data-i18n="s6_title">Odit Sekirite</div>
+        <div class="service-desc" data-i18n="s6_desc">Evalyasyon konplè sistèm sekirite antrepriz ou pou idantifye risk yo.</div>
+        <div class="service-price">
+          <span class="price-label" data-i18n="price_label">Pri Sèvis</span>
+          <div class="price-row"><span data-i18n="s6_p_web">Odit Sit Web:</span><strong>$110.00 USD / 14 380 HTG</strong></div>
+          <div class="price-row"><span data-i18n="s6_p_biz">Odit Biznis:</span><strong>$300.00 USD / 39 200 HTG</strong></div>
+          <div class="price-row"><span data-i18n="s6_p_pme">Odit PME:</span><strong>$650.00 USD+ / 84 960+ HTG</strong></div>
+        </div>
+        <div><span class="db-badge">⬡ DB: sevis_odit_sekirite</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m6')">Aprann Plis →</button>
+      </div>
+
+      <!-- Konsiltasyon PME -->
+      <div class="konsiltasyon-card">
+        <div class="konsiltasyon-title">💬 <span data-i18n="konsilt_title">Konsiltasyon Dijital</span></div>
+        <div class="konsiltasyon-price">
+          <div class="k-row">
+            <span class="k-label" data-i18n="konsilt_30min">30 minit</span>
+            <span class="k-val" data-i18n="konsilt_p2_30">$15.00 USD / 1 960 HTG</span>
+          </div>
+          <div class="k-row">
+            <span class="k-label" data-i18n="konsilt_1h">1 èdtan</span>
+            <span class="k-val" data-i18n="konsilt_p2_1h">$30.00 USD / 3 900 HTG</span>
+          </div>
+          <div class="k-row">
+            <span class="k-label" data-i18n="konsilt_strat">Plan Estratejik</span>
+            <span class="k-val" data-i18n="konsilt_p2_strat">$90.00 USD+ / 11 760+ HTG</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAKE 3: ONG & GWO -->
+    <button class="pake-btn" onclick="togglePake('pake3',this)">
+      <div class="pake-title" data-i18n="pake3_title">🏛️ Pake ONG & Gwo Antrepriz (Enterprise)</div>
+      <div class="pake-desc" data-i18n="pake3_desc">Solisyon avanse pou òganizasyon ki gen gwo volim done ak bezwen konfòmite.</div>
+      <span class="pake-arrow">→</span>
+    </button>
+    <div class="pake-content" id="pake3">
+
+      <!-- 6 sèvis devis -->
+      <div class="service-card">
+        <span class="service-emoji">🛡️</span>
+        <div class="service-title" data-i18n="s1_title">Sibèsekirite</div>
+        <div class="service-desc" data-i18n="s1_desc">Pwoteksyon rezo, sistèm ak done sansib.</div>
+        <div class="devis-badge" data-i18n="devis_msg">📋 Pri sou demann — Devis pèsonalize selon bezwen espesifik ou. Kontakte nou pou yon evalyasyon gratis.</div>
+        <div style="margin-top:10px;"><span class="db-badge">⬡ DB: sevis_sibèsekirite</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m1')">Aprann Plis →</button>
+      </div>
+
+      <div class="service-card">
+        <span class="service-emoji">🔍</span>
+        <div class="service-title" data-i18n="s2_title">Tès Penetrasyon</div>
+        <div class="service-desc" data-i18n="s2_desc">Detekte feblès sekirite yo avan atakè yo.</div>
+        <div class="devis-badge" data-i18n="devis_msg">📋 Pri sou demann — Devis pèsonalize selon bezwen espesifik ou. Kontakte nou pou yon evalyasyon gratis.</div>
+        <div style="margin-top:10px;"><span class="db-badge">⬡ DB: sevis_tes_penetrasyon</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m2')">Aprann Plis →</button>
+      </div>
+
+      <div class="service-card">
+        <span class="service-emoji">☁️</span>
+        <div class="service-title" data-i18n="s3_title">Sekirite Cloud</div>
+        <div class="service-desc" data-i18n="s3_desc">Pwoteje enfrastrikti cloud ak sèvis dijital yo.</div>
+        <div class="devis-badge" data-i18n="devis_msg">📋 Pri sou demann — Devis pèsonalize selon bezwen espesifik ou. Kontakte nou pou yon evalyasyon gratis.</div>
+        <div style="margin-top:10px;"><span class="db-badge">⬡ DB: sevis_sekirite_cloud</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m3')">Aprann Plis →</button>
+      </div>
+
+      <div class="service-card">
+        <span class="service-emoji">🕵️</span>
+        <div class="service-title" data-i18n="s4_title">Analiz Dijital</div>
+        <div class="service-desc" data-i18n="s4_desc">Ankèt sou ensidan enfòmatik ak rekiperasyon prèv.</div>
+        <div class="devis-badge" data-i18n="devis_msg">📋 Pri sou demann — Devis pèsonalize selon bezwen espesifik ou. Kontakte nou pou yon evalyasyon gratis.</div>
+        <div style="margin-top:10px;"><span class="db-badge">⬡ DB: sevis_analiz_dijital</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m4')">Aprann Plis →</button>
+      </div>
+
+      <div class="service-card">
+        <span class="service-emoji">🎓</span>
+        <div class="service-title" data-i18n="s5_title">Fòmasyon</div>
+        <div class="service-desc" data-i18n="s5_desc">Fòmasyon espesyalize pou ekip ak antrepriz sou sekirite dijital.</div>
+        <div class="devis-badge" data-i18n="devis_msg">📋 Pri sou demann — Devis pèsonalize selon bezwen espesifik ou. Kontakte nou pou yon evalyasyon gratis.</div>
+        <div style="margin-top:10px;"><span class="db-badge">⬡ DB: sevis_fomasyon</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m5')">Aprann Plis →</button>
+      </div>
+
+      <div class="service-card">
+        <span class="service-emoji">🔎</span>
+        <div class="service-title" data-i18n="s6_title">Odit Sekirite</div>
+        <div class="service-desc" data-i18n="s6_desc">Evalyasyon konplè sistèm sekirite antrepriz ou pou idantifye risk yo.</div>
+        <div class="devis-badge" data-i18n="devis_msg">📋 Pri sou dammad — Devis pèsonalize selon bezwen espesifik ou. Kontakte nou pou yon evalyasyon gratis.</div>
+        <div style="margin-top:10px;"><span class="db-badge">⬡ DB: sevis_odit_sekirite</span></div>
+        <button class="btn-learn" data-i18n="btn_learn" onclick="openModal('m6')">Aprann Plis →</button>
+      </div>
+
+      <!-- Konsiltasyon ONG -->
+      <div class="konsiltasyon-card">
+        <div class="konsiltasyon-title">💬 <span data-i18n="konsilt_title">Konsiltasyon Dijital</span></div>
+        <div class="devis-badge" data-i18n="devis_msg">📋 Pri sou dammad — Devis pèsonalize selon bezwen espesifik ou. Kontakte nou pou yon evalyasyon gratis.</div>
+      </div>
+    </div>
+
+  </div><!-- /pake-grid -->
+</div><!-- /section -->
+
+<!-- METODOLOJI -->
+<div class="meto-section">
+  <p class="meto-title" data-i18n="meto_label">// Metodoloji Nou An</p>
+  <div class="meto-grid">
+    <div class="meto-item">
+      <div class="meto-num">1</div>
+      <div>
+        <div class="meto-name" data-i18n="meto1_name">🔍 Analiz</div>
+        <div class="meto-desc" data-i18n="meto1_desc">Nou evalye nivo risk aktyèl ou.</div>
+      </div>
+    </div>
+    <div class="meto-item">
+      <div class="meto-num">2</div>
+      <div>
+        <div class="meto-name" data-i18n="meto2_name">🎯 Deteksyon</div>
+        <div class="meto-desc" data-i18n="meto2_desc">Nou jwenn kote feblès yo ye anvan atakè yo fè sa.</div>
+      </div>
+    </div>
+    <div class="meto-item">
+      <div class="meto-num">3</div>
+      <div>
+        <div class="meto-name" data-i18n="meto3_name">🔧 Remedyasyon</div>
+        <div class="meto-desc" data-i18n="meto3_desc">Nou bay solisyon konkrè pou fèmen pòt yo.</div>
+      </div>
+    </div>
+    <div class="meto-item">
+      <div class="meto-num">4</div>
+      <div>
+        <div class="meto-name" data-i18n="meto4_name">👁️ Siveyans</div>
+        <div class="meto-desc" data-i18n="meto4_desc">Nou rete avèk ou pou asire pwoteksyon an kontinye.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BAS -->
+<div class="cta-bottom">
+  <h3 data-i18n="cta_sevis_title">📞 Rele Nou pou yon Evalyasyon Gratis</h3>
+  <p data-i18n="cta_sevis_desc">Ou pa sèten ki pake ki bon pou ou? Ekip nou an disponib pou analize bezwen ou epi rekòmande solisyon ki adapte — san frè, san angajman.</p>
+  <a href="kontak.html" class="btn-primary" data-i18n="cta_sevis_btn">Kontakte Nou →</a>
+</div>
+
+<footer>
+  <p class="footer-brand">🛡️ ArmrData</p>
+  <p class="footer-tag"><span data-i18n="footer_tag">Securing your dataworld!</span></p>
+</footer>
+
+<!-- MODALS 1-10 -->
+<div class="modal-overlay" id="m1"><div class="modal">
+  <button class="modal-close" onclick="closeModal('m1')">✕</button>
+  <p class="modal-eyebrow">⬡ DB: sevis_sibèsekirite</p>
+  <h2>🛡️ <span data-i18n="s1_title">Sibèsekirite</span></h2>
+  <p class="modal-desc" data-i18n="s1_modal_desc">Pwoteksyon rezo, sistèm ak done sansib pou antrepriz ou a kont tout menas dijital modèn yo.</p>
+  <div class="modal-price-block">
+    <p class="modal-price-title" data-i18n="price_label">Pri Sèvis</p>
+    <div class="modal-price-row"><span class="p-type" data-i18n="pake_pme">PME</span><span class="p-val" data-i18n="s1_price">À partir de $110.00 USD / 14 380 HTG</span></div>
+    <div class="modal-price-row"><span class="p-type" data-i18n="pake_ong">ONG & Enterprise</span><span class="p-val" data-i18n="sur_devis">Sou devis</span></div>
+  </div>
+  <div class="form-group"><input type="text" data-i18n="ph_antrepriz" placeholder="Non Antrepriz"/></div>
+  <div class="form-group"><input type="text" data-i18n="ph_adrès" placeholder="Adrès Antrepriz"/></div>
+  <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl Antrepriz"/></div>
+  <div class="form-group"><textarea rows="4" data-i18n="ph_kòmantè" placeholder="Kòmantè"></textarea></div>
+  <button class="btn-green" data-i18n="btn_confirm">Mwen Dakò ✓</button>
+</div></div>
+
+<div class="modal-overlay" id="m2"><div class="modal">
+  <button class="modal-close" onclick="closeModal('m2')">✕</button>
+  <p class="modal-eyebrow">⬡ DB: sevis_tes_penetrasyon</p>
+  <h2>🔍 <span data-i18n="s2_title">Tès Penetrasyon</span></h2>
+  <p class="modal-desc" data-i18n="s2_modal_desc">Detekte feblès sekirite yo avan atakè yo — yon ekip espesyalize teste sistèm ou.</p>
+  <div class="modal-price-block">
+    <p class="modal-price-title" data-i18n="price_label">Pri Sèvis</p>
+    <div class="modal-price-row"><span class="p-type" data-i18n="pake_pme">PME</span><span class="p-val" data-i18n="s2_price">À partir de $190.00 USD / 24 800 HTG</span></div>
+    <div class="modal-price-row"><span class="p-type" data-i18n="pake_ong">ONG & Enterprise</span><span class="p-val" data-i18n="sur_devis">Sou devis</span></div>
+  </div>
+  <div class="form-group"><input type="text" data-i18n="ph_antrepriz" placeholder="Non Antrepriz"/></div>
+  <div class="form-group"><input type="text" data-i18n="ph_adrès" placeholder="Adrès Antrepriz"/></div>
+  <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl Antrepriz"/></div>
+  <div class="form-group"><textarea rows="4" data-i18n="ph_kòmantè" placeholder="Kòmantè"></textarea></div>
+  <button class="btn-green" data-i18n="btn_confirm">Mwen Dakò ✓</button>
+</div></div>
+
+<div class="modal-overlay" id="m3"><div class="modal">
+  <button class="modal-close" onclick="closeModal('m3')">✕</button>
+  <p class="modal-eyebrow">⬡ DB: sevis_sekirite_cloud</p>
+  <h2>☁️ <span data-i18n="s3_title">Sekirite Cloud</span></h2>
+  <p class="modal-desc" data-i18n="s3_modal_desc">Pwoteje enfrastrikti cloud ak sèvis dijital yo kont atak ak aksè non otorize.</p>
+  <div class="modal-price-block">
+    <p class="modal-price-title" data-i18n="price_label">Pri Sèvis</p>
+    <div class="modal-price-row"><span class="p-type" data-i18n="pake_pme">PME</span><span class="p-val" data-i18n="s3_price">À partir de $165.00 USD / 21 500 HTG</span></div>
+    <div class="modal-price-row"><span class="p-type" data-i18n="pake_ong">ONG & Enterprise</span><span class="p-val" data-i18n="sur_devis">Sou devis</span></div>
+  </div>
+  <div class="form-group"><input type="text" data-i18n="ph_antrepriz" placeholder="Non Antrepriz"/></div>
+  <div class="form-group"><input type="text" data-i18n="ph_adrès" placeholder="Adrès Antrepriz"/></div>
+  <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl Antrepriz"/></div>
+  <div class="form-group"><textarea rows="4" data-i18n="ph_kòmantè" placeholder="Kòmantè"></textarea></div>
+  <button class="btn-green" data-i18n="btn_confirm">Mwen Dakò ✓</button>
+</div></div>
+
+<div class="modal-overlay" id="m4"><div class="modal">
+  <button class="modal-close" onclick="closeModal('m4')">✕</button>
+  <p class="modal-eyebrow">⬡ DB: sevis_analiz_dijital</p>
+  <h2>🕵️ <span data-i18n="s4_title">Analiz Dijital</span></h2>
+  <p class="modal-desc" data-i18n="s4_modal_desc">Ankèt sou ensidan enfòmatik ak rekiperasyon prèv dijital.</p>
+  <div class="modal-price-block">
+    <p class="modal-price-title" data-i18n="price_label">Pri Sèvis</p>
+    <div class="modal-price-row"><span class="p-type" data-i18n="s4_p_basic">Analiz debaz</span><span class="p-val">$175.00 USD / 22 800 HTG</span></div>
+    <div class="modal-price-row"><span class="p-type" data-i18n="s4_p_full">Ankèt konplè</span><span class="p-val">$310.00 USD+ / 40 500+ HTG</span></div>
+    <div class="modal-price-row"><span class="p-type" data-i18n="s4_p_special">Ka espesyal</span><span class="p-val" data-i18n="sur_devis">Sou devis</span></div>
+  </div>
+  <div class="form-group"><input type="text" data-i18n="ph_antrepriz" placeholder="Non Antrepriz"/></div>
+  <div class="form-group"><input type="text" data-i18n="ph_adrès" placeholder="Adrès Antrepriz"/></div>
+  <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl Antrepriz"/></div>
+  <div class="form-group"><textarea rows="4" data-i18n="ph_kòmantè" placeholder="Kòmantè"></textarea></div>
+  <button class="btn-green" data-i18n="btn_confirm">Mwen Dakò ✓</button>
+</div></div>
+
+<div class="modal-overlay" id="m5"><div class="modal">
+  <button class="modal-close" onclick="closeModal('m5')">✕</button>
+  <p class="modal-eyebrow">⬡ DB: sevis_fomasyon</p>
+  <h2>🎓 <span data-i18n="s5_title">Fòmasyon</span></h2>
+  <p class="modal-desc" data-i18n="s5_modal_desc">Fòmasyon espesyalize pou ekip ak antrepriz sou sekirite dijital.</p>
+  <div class="modal-price-block">
+    <p class="modal-price-title" data-i18n="price_label">Pri Sèvis</p>
+    <div class="modal-price-row"><span class="p-type" data-i18n="s5_p_group">Gwoup 10–20 moun</span><span class="p-val">$250.00 USD / 32 600 HTG</span></div>
+    <div class="modal-price-row"><span class="p-type" data-i18n="s5_p_corp">Antrepriz</span><span class="p-val">$500.00 USD / 65 360 HTG</span></div>
+    <div class="modal-price-row"><span class="p-type" data-i18n="pake_ong">ONG & Enterprise</span><span class="p-val" data-i18n="sur_devis">Sou devis</span></div>
+  </div>
+  <div class="form-group"><input type="text" data-i18n="ph_antrepriz" placeholder="Non Antrepriz"/></div>
+  <div class="form-group"><input type="text" data-i18n="ph_adrès" placeholder="Adrès Antrepriz"/></div>
+  <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl Antrepriz"/></div>
+  <div class="form-group"><textarea rows="4" data-i18n="ph_kòmantè" placeholder="Kòmantè"></textarea></div>
+  <button class="btn-green" data-i18n="btn_confirm">Mwen Dakò ✓</button>
+</div></div>
+
+<div class="modal-overlay" id="m6"><div class="modal">
+  <button class="modal-close" onclick="closeModal('m6')">✕</button>
+  <p class="modal-eyebrow">⬡ DB: sevis_odit_sekirite</p>
+  <h2>🔎 <span data-i18n="s6_title">Odit Sekirite</span></h2>
+  <p class="modal-desc" data-i18n="s6_modal_desc">Evalyasyon konplè sistèm sekirite antrepriz ou pou idantifye risk yo ak rekòmande solisyon.</p>
+  <div class="modal-price-block">
+    <p class="modal-price-title" data-i18n="price_label">Pri Sèvis</p>
+    <div class="modal-price-row"><span class="p-type" data-i18n="s6_p_web">Odit Sit Web</span><span class="p-val">$110.00 USD / 14 380 HTG</span></div>
+    <div class="modal-price-row"><span class="p-type" data-i18n="s6_p_biz">Odit Biznis</span><span class="p-val">$300.00 USD / 39 200 HTG</span></div>
+    <div class="modal-price-row"><span class="p-type" data-i18n="s6_p_pme">Odit PME</span><span class="p-val">$650.00 USD+ / 84 960+ HTG</span></div>
+    <div class="modal-price-row"><span class="p-type" data-i18n="pake_ong">ONG & Enterprise</span><span class="p-val" data-i18n="sur_devis">Sou devis</span></div>
+  </div>
+  <div class="form-group"><input type="text" data-i18n="ph_antrepriz" placeholder="Non Antrepriz"/></div>
+  <div class="form-group"><input type="text" data-i18n="ph_adrès" placeholder="Adrès Antrepriz"/></div>
+  <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl Antrepriz"/></div>
+  <div class="form-group"><textarea rows="4" data-i18n="ph_kòmantè" placeholder="Kòmantè"></textarea></div>
+  <button class="btn-green" data-i18n="btn_confirm">Mwen Dakò ✓</button>
+</div></div>
+
+<div class="modal-overlay" id="m7"><div class="modal">
+  <button class="modal-close" onclick="closeModal('m7')">✕</button>
+  <p class="modal-eyebrow">⬡ DB: sevis_done_pesonèl</p>
+  <h2>🛡️ <span data-i18n="s7_title">Pwoteksyon Done Pèsonèl</span></h2>
+  <p class="modal-desc" data-i18n="s7_modal_desc">Pwoteje enfòmasyon pèsonèl ou kont vòl ak fwod — sekirize idantite dijital ou.</p>
+  <div class="modal-price-block">
+    <p class="modal-price-title" data-i18n="price_label">Pri Sèvis</p>
+    <div class="modal-price-row"><span class="p-type" data-i18n="pake_indiv">Endividyèl</span><span class="p-val" data-i18n="s7_price">À partir de $44.99 USD / 5 880 HTG</span></div>
+  </div>
+  <div class="form-group"><input type="text" data-i18n="ph_antrepriz" placeholder="Non Konplè"/></div>
+  <div class="form-group"><input type="text" data-i18n="ph_adrès" placeholder="Adrès"/></div>
+  <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl"/></div>
+  <div class="form-group"><textarea rows="4" data-i18n="ph_kòmantè" placeholder="Kòmantè"></textarea></div>
+  <button class="btn-green" data-i18n="btn_confirm">Mwen Dakò ✓</button>
+</div></div>
+
+<div class="modal-overlay" id="m8"><div class="modal">
+  <button class="modal-close" onclick="closeModal('m8')">✕</button>
+  <p class="modal-eyebrow">⬡ DB: sevis_sekirite_aparèy</p>
+  <h2>📱 <span data-i18n="s8_title">Sekirite Aparèy</span></h2>
+  <p class="modal-desc" data-i18n="s8_modal_desc">Pwoteksyon telefòn, tablèt ak òdinatè kont menas ak aksè ilegal.</p>
+  <div class="modal-price-block">
+    <p class="modal-price-title" data-i18n="price_label">Pri Sèvis</p>
+    <div class="modal-price-row"><span class="p-type" data-i18n="pake_indiv">Endividyèl</span><span class="p-val" data-i18n="s8_price">À partir de $35.00 USD / 4 500 HTG</span></div>
+  </div>
+  <div class="form-group"><input type="text" data-i18n="ph_antrepriz" placeholder="Non Konplè"/></div>
+  <div class="form-group"><input type="text" data-i18n="ph_adrès" placeholder="Adrès"/></div>
+  <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl"/></div>
+  <div class="form-group"><textarea rows="4" data-i18n="ph_kòmantè" placeholder="Kòmantè"></textarea></div>
+  <button class="btn-green" data-i18n="btn_confirm">Mwen Dakò ✓</button>
+</div></div>
+
+<div class="modal-overlay" id="m9"><div class="modal">
+  <button class="modal-close" onclick="closeModal('m9')">✕</button>
+  <p class="modal-eyebrow">⬡ DB: sevis_sibèsekirite_pesonèl</p>
+  <h2>🛡️ <span data-i18n="s9_title">Sibèsekirite Pèsonèl</span></h2>
+  <p class="modal-desc" data-i18n="s9_modal_desc">Pwoteksyon rezo, sistèm ak done pèsonèl ou yo kont tout menas dijital.</p>
+  <div class="modal-price-block">
+    <p class="modal-price-title" data-i18n="price_label">Pri Sèvis</p>
+    <div class="modal-price-row"><span class="p-type" data-i18n="pake_indiv">Endividyèl</span><span class="p-val" data-i18n="s9_price">À partir de $50.00 USD / 6 500 HTG</span></div>
+  </div>
+  <div class="form-group"><input type="text" data-i18n="ph_antrepriz" placeholder="Non Konplè"/></div>
+  <div class="form-group"><input type="text" data-i18n="ph_adrès" placeholder="Adrès"/></div>
+  <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl"/></div>
+  <div class="form-group"><textarea rows="4" data-i18n="ph_kòmantè" placeholder="Kòmantè"></textarea></div>
+  <button class="btn-green" data-i18n="btn_confirm">Mwen Dakò ✓</button>
+</div></div>
+
+<div class="modal-overlay" id="m10"><div class="modal">
+  <button class="modal-close" onclick="closeModal('m10')">✕</button>
+  <p class="modal-eyebrow">⬡ DB: sevis_tes_pen_pesonèl</p>
+  <h2>🔍 <span data-i18n="s10_title">Tès Penetrasyon Pèsonèl</span></h2>
+  <p class="modal-desc" data-i18n="s10_modal_desc">Detekte feblès sekirite nan sistèm pèsonèl ou avan atakè yo jwenn yo.</p>
+  <div class="modal-price-block">
+    <p class="modal-price-title" data-i18n="price_label">Pri Sèvis</p>
+    <div class="modal-price-row"><span class="p-type" data-i18n="pake_indiv">Endividyèl</span><span class="p-val" data-i18n="s10_price">À partir de $99.99 USD / 13 000 HTG</span></div>
+  </div>
+  <div class="form-group"><input type="text" data-i18n="ph_antrepriz" placeholder="Non Konplè"/></div>
+  <div class="form-group"><input type="text" data-i18n="ph_adrès" placeholder="Adrès"/></div>
+  <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl"/></div>
+  <div class="form-group"><textarea rows="4" data-i18n="ph_kòmantè" placeholder="Kòmantè"></textarea></div>
+  <button class="btn-green" data-i18n="btn_confirm">Mwen Dakò ✓</button>
+</div></div>
+
+<script src="lang.js"></script>
+<script>
+  document.getElementById('burger').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('#navLinks a').forEach(function(l) {
+    l.addEventListener('click', function() {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+  function togglePake(id, btn) {
+    var c = document.getElementById(id);
+    var isOpen = c.classList.contains('open');
+    document.querySelectorAll('.pake-content').forEach(function(x){ x.classList.remove('open'); });
+    document.querySelectorAll('.pake-btn').forEach(function(x){ x.classList.remove('active'); });
+    if (!isOpen) { c.classList.add('open'); btn.classList.add('active'); }
+    applyTranslations('sevis');
+  }
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.modal-overlay').forEach(function(o) {
+    o.addEventListener('click', function(e){ if(e.target===o) closeModal(o.id); });
+  });
+  var langCodes = { ht:'KR', fr:'FR', en:'EN' };
+  function updateLangDisplay() {
+    document.getElementById('currentLang').textContent = langCodes[getLang()] || 'KR';
+  }
+  initLangSwitcher('sevis');
+  updateLangDisplay();
+  document.querySelectorAll('.lang-option').forEach(function(btn) {
+    btn.addEventListener('click', function() { updateLangDisplay(); });
+  });
+</script>
+</body>
+</html>
+
