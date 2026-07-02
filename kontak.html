@@ -80,8 +80,8 @@
   <div class="form-section">
     <p class="section-label" data-i18n="form_label">// Voye yon Mesaj</p>
     <form class="form-card" action="https://formspree.io/f/xpqgodkz" method="POST">
-      <div class="form-group"><input type="text" data-i18n="ph_non" placeholder="Non Konplè / Non Konpayi"/></div>
-      <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl Pwofesyonèl"/></div>
+      <div class="form-group"><input type="text" name="name" data-i18n="ph_non" placeholder="Non Konplè / Non Konpayi"/></div>
+      <div class="form-group"><input type="email" name="email" data-i18n="ph_imel" placeholder="Imèl Pwofesyonèl"/></div>
       <div class="form-group">
         <select>
           <option value="" disabled selected data-i18n="ph_sijè">Sijè — Chwazi youn</option>
@@ -92,7 +92,7 @@
           <option data-i18n="opt5">Lòt</option>
         </select>
       </div>
-      <div class="form-group"><textarea rows="5" data-i18n="ph_mesaj" placeholder="Mesaj ou — eksplike bezwen ou an ak detay"></textarea></div>
+      <div class="form-group"><textarea rows="5" name="message" data-i18n="ph_mesaj" placeholder="Mesaj ou — eksplike bezwen ou an ak detay"></textarea></div>
       <button type="submit" class="btn-primary" data-i18n="btn_send">Voye Mesaj →</button>
     </div>
   </div>
