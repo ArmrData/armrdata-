@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArmrData</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── HERO HOLOGRAM ── */
+    .hero {
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:60px 24px;
+      text-align:center;
+      border-bottom:none;
+    }
+    .hero::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(ellipse at 50% 0%,rgba(0,200,255,0.12) 0%,transparent 60%),
+        radial-gradient(ellipse at 80% 80%,rgba(0,230,118,0.06) 0%,transparent 50%),
+        radial-gradient(ellipse at 20% 70%,rgba(0,200,255,0.06) 0%,transparent 50%);
+      pointer-events:none;
+    }
+    .hero::after {
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(0,200,255,0.03) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,200,255,0.03) 1px,transparent 1px);
+      background-size:40px 40px;
+      pointer-events:none;
+    }
+    .holo-ring {
+      position:absolute;
+      border-radius:50%;
+      border:1px solid rgba(0,200,255,0.15);
+      animation:pulse-ring 4s ease-in-out infinite;
+    }
+    .holo-ring:nth-child(1){width:300px;height:300px;animation-delay:0s;}
+    .holo-ring:nth-child(2){width:450px;height:450px;animation-delay:0.8s;border-color:rgba(0,200,255,0.08);}
+    .holo-ring:nth-child(3){width:600px;height:600px;animation-delay:1.6s;border-color:rgba(0,200,255,0.04);}
+    @keyframes pulse-ring{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.05);opacity:0.5;}}
+    .holo-shield{position:relative;z-index:2;font-size:5rem;margin-bottom:32px;filter:drop-shadow(0 0 30px rgba(0,200,255,0.5));animation:float 3s ease-in-out infinite;}
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+    .hero-eyebrow{position:relative;z-index:2;}
+    .hero-lines{position:relative;z-index:2;margin-bottom:32px;}
+    .hero-line{font-size:clamp(2.2rem,8vw,3.5rem);font-weight:900;line-height:1.1;letter-spacing:-1px;color:var(--white);margin-bottom:8px;}
+    .hero-line.cyan{color:var(--cyan);text-shadow:0 0 40px rgba(0,200,255,0.4);}
+    .hero-line.green{color:var(--green);text-shadow:0 0 40px rgba(0,230,118,0.3);}
+    .holo-divider{position:relative;z-index:2;width:80px;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);margin:0 auto 28px;}
+    .hero-desc{position:relative;z-index:2;font-size:0.95rem;color:#6a7d90;line-height:1.75;max-width:420px;margin-bottom:36px;}
+    .hero-btns{position:relative;z-index:2;display:flex;flex-direction:column;gap:12px;width:100%;max-width:320px;}
+
+    /* ── STATS ── */
+    .stats{padding:40px 24px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;text-align:center;}
+    .stat-num{font-family:'Share Tech Mono',monospace;font-size:1.4rem;color:var(--cyan);font-weight:700;margin-bottom:4px;}
+    .stat-label{font-size:0.72rem;color:var(--muted);line-height:1.4;}
+
+    /* ── SÈVIS RAPID ── */
+    .quick-services{padding:0 24px 40px;}
+    .qs-title{font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:3px;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;}
+    .qs-grid{display:flex;flex-direction:column;gap:10px;}
+    .qs-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:12px;text-decoration:none;transition:border-color 0.2s,transform 0.2s;}
+    .qs-card:hover{border-color:rgba(0,200,255,0.3);transform:translateX(4px);}
+    .qs-emoji{font-size:1.3rem;flex-shrink:0;}
+    .qs-info{flex:1;}
+    .qs-name{font-size:0.9rem;font-weight:600;color:var(--white);margin-bottom:2px;}
+    .qs-desc{font-size:0.75rem;color:var(--muted);}
+    .qs-arrow{color:var(--cyan);font-size:0.9rem;}
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="index.html" data-i18n="nav_brand">ArmrData</a>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn" onclick="toggleLangMenu()">🌐 <span id="currentLang">KR</span></button>
+        <div class="lang-menu" id="langMenu">
+          <button class="lang-option" data-lang="ht"><span class="lang-flag">🇭🇹</span> Kreyòl</button>
+          <button class="lang-option" data-lang="fr"><span class="lang-flag">🇫🇷</span> Français</button>
+          <button class="lang-option" data-lang="en"><span class="lang-flag">🇺🇸</span> English</button>
+        </div>
+      </div>
+      <button class="hamburger" id="burger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active" data-i18n="nav_akèy">Akèy</a></li>
+      <li><a href="apropos.html" data-i18n="nav_apropos">À Propos</a></li>
+      <li><a href="sevis.html" data-i18n="nav_sevis">Sèvis</a></li>
+      <li><a href="ebook.html" data-i18n="nav_ebook">E-Book</a></li>
+      <li><a href="blog.html" data-i18n="nav_blog">Blog</a></li>
+      <li><a href="afilyasyon.html" data-i18n="nav_afilyasyon">Afilyasyon</a></li>
+      <li><a href="kontak.html" data-i18n="nav_kontak">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="holo-ring"></div>
+    <div class="holo-ring"></div>
+    <div class="holo-ring"></div>
+    <p class="hero-eyebrow" data-i18n="hero_eyebrow">// ArmrData Cybersecurity</p>
+    <div class="holo-shield">🛡️</div>
+    <div class="hero-lines">
+      <div class="hero-line cyan" data-i18n="hero_line1">Pwoteje Done Ou.</div>
+      <div class="hero-line" data-i18n="hero_line2">Pwoteje Biznis Ou.</div>
+      <div class="hero-line green" data-i18n="hero_line3">Pwoteje Avni Dijital Ou.</div>
+    </div>
+    <div class="holo-divider"></div>
+    <p class="hero-desc" data-i18n="hero_desc">Nou ede moun, antrepriz ak òganizasyon pwoteje done yo kont menas dijital yo.</p>
+    <div class="hero-btns">
+      <a href="sevis.html" class="btn-primary" data-i18n="btn_sevis">Dekouvri Sèvis Nou →</a>
+      <a href="kontak.html" class="btn-secondary" data-i18n="btn_kontak">Kontakte Nou</a>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div>
+      <div class="stat-num" data-i18n="stat1_num">100%</div>
+      <div class="stat-label" data-i18n="stat1_label">Konfidansyalite Garanti</div>
+    </div>
+    <div>
+      <div class="stat-num" data-i18n="stat2_num">&lt;24h</div>
+      <div class="stat-label" data-i18n="stat2_label">Tan Repons</div>
+    </div>
+    <div>
+      <div class="stat-num" data-i18n="stat3_num">3</div>
+      <div class="stat-label" data-i18n="stat3_label">Lang Disponib</div>
+    </div>
+  </div>
+
+  <div class="quick-services">
+    <p class="qs-title" data-i18n="qs_title">// Sèvis Prensipal</p>
+    <div class="qs-grid">
+      <a href="sevis.html" class="qs-card">
+        <span class="qs-emoji">🛡️</span>
+        <div class="qs-info">
+          <div class="qs-name" data-i18n="qs1_name">Sibèsekirite</div>
+          <div class="qs-desc" data-i18n="qs1_desc">Pwoteksyon rezo, sistèm ak done</div>
+        </div>
+        <span class="qs-arrow">→</span>
+      </a>
+      <a href="sevis.html" class="qs-card">
+        <span class="qs-emoji">🔍</span>
+        <div class="qs-info">
+          <div class="qs-name" data-i18n="qs2_name">Tès Penetrasyon</div>
+          <div class="qs-desc" data-i18n="qs2_desc">Detekte feblès avan atakè yo</div>
+        </div>
+        <span class="qs-arrow">→</span>
+      </a>
+      <a href="sevis.html" class="qs-card">
+        <span class="qs-emoji">🎓</span>
+        <div class="qs-info">
+          <div class="qs-name" data-i18n="qs3_name">Fòmasyon</div>
+          <div class="qs-desc" data-i18n="qs3_desc">Ekip ou pwoteje, biznis ou solid</div>
+        </div>
+        <span class="qs-arrow">→</span>
+      </a>
+      <a href="sevis.html" class="qs-card">
+        <span class="qs-emoji">🔎</span>
+        <div class="qs-info">
+          <div class="qs-name" data-i18n="qs4_name">Odit Sekirite</div>
+          <div class="qs-desc" data-i18n="qs4_desc">Evalyasyon konplè sistèm ou</div>
+        </div>
+        <span class="qs-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="cta-ebook">
+    <h3 data-i18n="cta_title">📖 Blendaj Dijital</h3>
+    <p data-i18n="cta_desc">7 etap pou pwoteje tèt ou ak biznis ou kont pirat.</p>
+    <a href="ebook.html" class="cta-btn" data-i18n="cta_btn">Dekouvri Ebook la</a>
+  </div>
+
+  <footer>
+    <p class="footer-brand">🛡️ ArmrData</p>
+    <p class="footer-tag"><span data-i18n="footer_tag">Securing your dataworld!</span></p>
+  </footer>
+
+  <script src="lang.js"></script>
+  <script>
+    document.getElementById('burger').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('#navLinks a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+    var langCodes = { ht:'KR', fr:'FR', en:'EN' };
+    function updateLangDisplay() {
+      document.getElementById('currentLang').textContent = langCodes[getLang()] || 'KR';
+    }
+    initLangSwitcher('index');
+    updateLangDisplay();
+    document.querySelectorAll('.lang-option').forEach(function(btn) {
+      btn.addEventListener('click', function() { updateLangDisplay(); });
+    });
+  </script>
+
+</body>
+</html>
