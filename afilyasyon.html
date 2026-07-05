@@ -100,16 +100,17 @@
 
   <div class="form-section">
     <p class="section-label" data-i18n="form_label">// Fòm Afilyasyon</p>
-    <div class="form-card">
-      <div class="form-group"><input type="text" data-i18n="ph_non" placeholder="Non"/></div>
-      <div class="form-group"><input type="text" data-i18n="ph_siyati" placeholder="Siyati"/></div>
-      <div class="form-group"><input type="email" data-i18n="ph_imel" placeholder="Imèl"/></div>
-      <div class="form-group"><input type="text" data-i18n="ph_antrepriz" placeholder="Non Antrepriz"/></div>
-      <div class="form-group"><input type="text" data-i18n="ph_adrès" placeholder="Adrès Antrepriz"/></div>
-      <div class="form-group"><input type="email" data-i18n="ph_imel_ant" placeholder="Imèl Antrepriz"/></div>
-      <div class="form-group"><input type="tel" data-i18n="ph_tel" placeholder="Telefòn"/></div>
-      <div class="form-group"><input type="url" data-i18n="ph_sit" placeholder="Sit entènèt (opsyonèl)"/></div>
-      <button class="btn-green" data-i18n="btn_submit">Afilye Kounye a</button>
+    <form class="form-card" action="https://formspree.io/f/mbdvqblr" method="POST">
+      <div class="form-group"><input type="text" name="prenom" data-i18n="ph_non" placeholder="Non"/></div>
+      <div class="form-group"><input type="text" name="siyati" data-i18n="ph_siyati" placeholder="Siyati"/></div>
+      <div class="form-group"><input type="email" name="email" data-i18n="ph_imel" placeholder="Imèl"/></div>
+      <div class="form-group"><input type="text" name="antrepriz" data-i18n="ph_antrepriz" placeholder="Non Antrepriz"/></div>
+      <div class="form-group"><input type="text" name="adres" data-i18n="ph_adrès" placeholder="Adrès Antrepriz"/></div>
+      <div class="form-group"><input type="email" name="email_antrepriz" data-i18n="ph_imel_ant" placeholder="Imèl Antrepriz"/></div>
+      <div class="form-group"><input type="tel" name="telefon" data-i18n="ph_tel" placeholder="Telefòn"/></div>
+      <div class="form-group"><input type="url" name="sit_web" data-i18n="ph_sit" placeholder="Sit entènèt (opsyonèl)"/></div>
+      <button type="submit" class="btn-green" data-i18n="btn_submit">Afilye Kounye a</button>
+    </form>
     </div>
   </div>
 
