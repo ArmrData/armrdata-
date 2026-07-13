@@ -146,7 +146,8 @@
       var appsScriptParams = new URLSearchParams(formData);
 
       // 1. Voye bay Google Apps Script (ekri sou Sheet + voye imèl)
-      fetch("METE_URL_APPS_SCRIPT_LA_ISI", {
+      fetch("https://script.google.com/macros/s/AKfycbwozV3j5cJzsscEnKWk454xIl1dxwKwMYsQgBL2-2-buyEyQSgtwmSAGXprFfraGq94/exec", {
+ ", {
         method: "POST",
         body: appsScriptParams
       }).catch(function(err) { console.log("Apps Script error:", err); });
