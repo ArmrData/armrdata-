@@ -100,7 +100,7 @@
 
   <div class="form-section">
     <p class="section-label" data-i18n="form_label">// Fòm Afilyasyon</p>
-    <form class="form-card" action="https://formspree.io/f/mbdvqblr" method="POST">
+    <form class="form-card" id="afilyasyonForm">
       <div class="form-group"><input type="text" name="prenom" data-i18n="ph_non" placeholder="Non"/></div>
       <div class="form-group"><input type="text" name="siyati" data-i18n="ph_siyati" placeholder="Siyati"/></div>
       <div class="form-group"><input type="email" name="email" data-i18n="ph_imel" placeholder="Imèl"/></div>
@@ -111,7 +111,6 @@
       <div class="form-group"><input type="url" name="sit_web" data-i18n="ph_sit" placeholder="Sit entènèt (opsyonèl)"/></div>
       <button type="submit" class="btn-green" data-i18n="btn_submit">Afilye Kounye a</button>
     </form>
-    </div>
   </div>
 
   <footer>
@@ -137,6 +136,30 @@
     updateLangDisplay();
     document.querySelectorAll('.lang-option').forEach(function(btn) {
       btn.addEventListener('click', function() { updateLangDisplay(); });
+    });
+
+    // Soumèt fòm lan bay Apps Script (Sheet + imèl) AK Formspree an menm tan
+    document.getElementById('afilyasyonForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var form = e.target;
+      var formData = new FormData(form);
+      var appsScriptParams = new URLSearchParams(formData);
+
+      // 1. Voye bay Google Apps Script (ekri sou Sheet + voye imèl)
+      fetch("METE_URL_APPS_SCRIPT_LA_ISI", {
+        method: "POST",
+        body: appsScriptParams
+      }).catch(function(err) { console.log("Apps Script error:", err); });
+
+      // 2. Voye bay Formspree tou (backup imèl)
+      fetch("https://formspree.io/f/mbdvqblr", {
+        method: "POST",
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      }).catch(function(err) { console.log("Formspree error:", err); });
+
+      alert("Afilyasyon resevwa avèk siksè! Mèsi.");
+      form.reset();
     });
   </script>
 
