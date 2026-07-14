@@ -466,3 +466,12 @@ footer {
 
 .cta-btn:hover { opacity:0.85; }
 
+.payment-section { padding:28px 24px 40px; }
+.pay-h2 { font-size:1.3rem; font-weight:700; color:var(--white); margin-bottom:20px; }
+.payment-grid { display:flex; flex-direction:column; gap:14px; }
+.payment-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px; text-align:center; }
+.payment-emoji { font-size:1.8rem; display:block; margin-bottom:8px; }
+.payment-name { font-size:1.05rem; font-weight:700; color:var(--cyan); margin-bottom:6px; }
+.payment-desc { font-size:0.85rem; color:#6a7d90; line-height:1.6; }
+.payment-intl { border-color:rgba(0,230,118,0.3); }
+.btn-whatsapp { display:inline-block; margin-top:14px; background:var(--green); color:#000; padding:10px 20px; border-radius:30px; font-weight:700; text-decoration:none; font-size:0.85rem; }
