@@ -50,6 +50,19 @@
     .btn-preview:hover { background:rgba(0,200,255,0.08); }
     .btn-buy { display:block; width:100%; text-align:center; font-family:'Share Tech Mono',monospace; font-size:0.85rem; letter-spacing:1px; color:#000; background:var(--green); border:none; border-radius:30px; padding:16px; cursor:pointer; text-decoration:none; font-weight:700; transition:opacity 0.2s; }
     .btn-buy:hover { opacity:0.9; }
+
+    .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:999; justify-content:center; align-items:center; padding:20px; }
+    .modal-overlay.open { display:flex; }
+    .modal-box { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:28px 22px; max-width:420px; width:100%; position:relative; max-height:85vh; overflow-y:auto; }
+    .modal-close { position:absolute; top:14px; right:16px; background:none; border:none; color:var(--white); font-size:1.2rem; cursor:pointer; }
+    .pay-h2 { font-size:1.2rem; font-weight:700; color:var(--white); margin-bottom:18px; }
+    .payment-grid { display:flex; flex-direction:column; gap:12px; }
+    .payment-card { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:16px; text-align:center; }
+    .payment-emoji { font-size:1.6rem; display:block; margin-bottom:6px; }
+    .payment-name { font-size:1rem; font-weight:700; color:var(--cyan); margin-bottom:4px; }
+    .payment-desc { font-size:0.82rem; color:#6a7d90; line-height:1.5; }
+    .payment-intl { border-color:rgba(0,230,118,0.3); }
+    .btn-whatsapp { display:inline-block; margin-top:10px; background:var(--green); color:#000; padding:8px 18px; border-radius:30px; font-weight:700; text-decoration:none; font-size:0.8rem; }
   </style>
 </head>
 <body>
@@ -144,13 +157,44 @@
       <div class="step-note" data-i18n="step_note">🔒 Apre konfimasyon peman an, ou ap resevwa vèsyon lang ou te chwazi a.</div>
     </div>
     <a href="#" class="btn-preview" data-i18n="btn_preview">Li Apèsi →</a>
-    <a href="https://wa.me/50937886919?text=Bonjou%20ArmrData%2C%20mwen%20vle%20achte%20Blendaj%20Dijital%20-%20%2414.99%20USD" class="btn-buy" data-i18n="btn_buy">Achte Kounye a</a>
+    <button type="button" class="btn-buy" onclick="openPaymentModal()" data-i18n="btn_buy">Achte Kounye a</button>
   </div>
 
   <footer>
     <p class="footer-brand">🛡️ ArmrData</p>
     <p class="footer-tag"><span data-i18n="footer_tag">Securing your dataworld!</span></p>
   </footer>
+
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closePaymentModal()">✕</button>
+      <p class="section-label" data-i18n="pay_label">// Metòd Peman</p>
+      <h2 class="pay-h2" data-i18n="pay_title">Metòd Peman Disponib</h2>
+      <div class="payment-grid">
+        <div class="payment-card">
+          <span class="payment-emoji">📱</span>
+          <div class="payment-name">MonCash</div>
+          <div class="payment-desc" data-i18n="pay_local_desc">Peman lokal, rapid ak sekirize.</div>
+        </div>
+        <div class="payment-card">
+          <span class="payment-emoji">📲</span>
+          <div class="payment-name">NatCash</div>
+          <div class="payment-desc" data-i18n="pay_local_desc">Peman lokal, rapid ak sekirize.</div>
+        </div>
+        <div class="payment-card">
+          <span class="payment-emoji">🏦</span>
+          <div class="payment-name">Sogebank</div>
+          <div class="payment-desc" data-i18n="pay_local_desc">Peman lokal, rapid ak sekirize.</div>
+        </div>
+        <div class="payment-card payment-intl">
+          <span class="payment-emoji">🌍</span>
+          <div class="payment-name" data-i18n="pay_intl_name">Kliyan Entènasyonal</div>
+          <div class="payment-desc" data-i18n="pay_intl_desc">Ou nan dyaspora a oswa lòt peyi? Kontakte nou dirèkteman pou opsyon peman ki adapte pou ou.</div>
+          <a href="https://wa.me/50937886919" class="btn-whatsapp" data-i18n="pay_intl_btn">💬 Kontakte sou WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="lang.js"></script>
   <script>
@@ -173,34 +217,6 @@
     });
   </script>
 
-<div class="payment-section">
-  <p class="section-label" data-i18n="pay_label">// Metòd Peman</p>
-  <h2 class="pay-h2" data-i18n="pay_title">Metòd Peman Disponib</h2>
-
-  <div class="payment-grid">
-    <div class="payment-card">
-      <span class="payment-emoji">📱</span>
-      <div class="payment-name">MonCash</div>
-      <div class="payment-desc" data-i18n="pay_local_desc">Peman lokal, rapid ak sekirize.</div>
-    </div>
-    <div class="payment-card">
-      <span class="payment-emoji">📲</span>
-      <div class="payment-name">NatCash</div>
-      <div class="payment-desc" data-i18n="pay_local_desc">Peman lokal, rapid ak sekirize.</div>
-    </div>
-    <div class="payment-card">
-      <span class="payment-emoji">🏦</span>
-      <div class="payment-name">Sogebank</div>
-      <div class="payment-desc" data-i18n="pay_local_desc">Peman lokal, rapid ak sekirize.</div>
-    </div>
-    <div class="payment-card payment-intl">
-      <span class="payment-emoji">🌍</span>
-      <div class="payment-name" data-i18n="pay_intl_name">Kliyan Entènasyonal</div>
-      <div class="payment-desc" data-i18n="pay_intl_desc">Ou nan dyaspora a oswa lòt peyi? Kontakte nou dirèkteman pou opsyon peman ki adapte pou ou.</div>
-      <a href="https://wa.me/50937886919" class="btn-whatsapp" data-i18n="pay_intl_btn">💬 Kontakte sou WhatsApp</a>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
+
