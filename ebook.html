@@ -210,7 +210,13 @@
     function updateLangDisplay() {
       document.getElementById('currentLang').textContent = langCodes[getLang()] || 'KR';
     }
-    initLangSwitcher('ebook');
+  function openPaymentModal() {
+  document.getElementById('paymentModal').classList.add('open');
+}
+function closePaymentModal() {
+  document.getElementById('paymentModal').classList.remove('open');
+}  
+initLangSwitcher('ebook');
     updateLangDisplay();
     document.querySelectorAll('.lang-option').forEach(function(btn) {
       btn.addEventListener('click', function() { updateLangDisplay(); });
