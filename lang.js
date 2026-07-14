@@ -213,6 +213,11 @@ const translations = {
       step3:"Voye resi peman an", step4:"Resevwa liv la pa imèl",
       step_note:"🔒 Apre konfimasyon peman an, ou ap resevwa vèsyon lang ou te chwazi a.",
       btn_preview:"Li Apèsi →", btn_buy:"Achte Kounye a",
+      pay_label:"// Metòd Peman", pay_title:"Metòd Peman Disponib",
+      pay_local_desc:"Peman lokal, rapid ak sekirize.",
+      pay_intl_name:"Kliyan Entènasyonal",
+      pay_intl_desc:"Ou nan dyaspora a oswa lòt peyi? Kontakte nou dirèkteman pou opsyon peman ki adapte pou ou.",
+      pay_intl_btn:"💬 Kontakte sou WhatsApp",
       footer_tag:"Securing your dataworld!"
     },
     fr: {
@@ -237,6 +242,11 @@ const translations = {
       step4:"Recevez le livre par email",
       step_note:"🔒 Après confirmation du paiement, vous recevrez la version dans la langue choisie.",
       btn_preview:"Lire l'Aperçu →", btn_buy:"Acheter Maintenant",
+      pay_label:"// Méthode de Paiement", pay_title:"Méthodes de Paiement Disponibles",
+      pay_local_desc:"Paiement local, rapide et sécurisé.",
+      pay_intl_name:"Clients Internationaux",
+      pay_intl_desc:"Vous êtes dans la diaspora ou un autre pays ? Contactez-nous directement pour des options de paiement adaptées.",
+      pay_intl_btn:"💬 Contacter sur WhatsApp",
       footer_tag:"Securing your dataworld!"
     },
     en: {
@@ -259,6 +269,11 @@ const translations = {
       step3:"Send payment receipt", step4:"Receive the book by email",
       step_note:"🔒 After payment confirmation, you will receive the version in your chosen language.",
       btn_preview:"Read Preview →", btn_buy:"Buy Now",
+      pay_label:"// Payment Method", pay_title:"Available Payment Methods",
+      pay_local_desc:"Local payment, fast and secure.",
+      pay_intl_name:"International Clients",
+      pay_intl_desc:"In the diaspora or another country? Contact us directly for payment options suited to you.",
+      pay_intl_btn:"💬 Contact on WhatsApp",
       footer_tag:"Securing your dataworld!"
     }
   },
@@ -431,12 +446,10 @@ const translations = {
       s9_modal_desc:"Pwoteksyon rezo, sistèm ak done pèsonèl ou yo kont tout menas dijital.",
       s10_title:"Tès Penetrasyon Pèsonèl", s10_desc:"Detekte feblès sekirite nan sistèm pèsonèl ou avan atakè yo.",
       s10_modal_desc:"Detekte feblès sekirite nan sistèm pèsonèl ou avan atakè yo jwenn yo.",
-      // PRI ENDIVIDYÈL
       p7_pri:"À pati de $44.99 USD oswa 5 880 Goud",
       p8_pri:"À pati de $35 USD oswa 4 500 Goud",
       p9_pri:"À pati de $50 USD oswa 6 500 Goud",
       p10_pri:"À pati de $99.99 USD oswa 13 000 Goud",
-      // PRI PME
       p1_pri:"À pati de $110 USD oswa 14 380 Goud",
       p2_pri:"À pati de $190 USD oswa 24 800 Goud",
       p3_pri:"À pati de $165 USD oswa 21 500 Goud",
@@ -450,7 +463,6 @@ const translations = {
       p6_pri_web:"Odit Sit Web: $110 USD oswa 14 380 Goud",
       p6_pri_biz:"Odit Biznis: $300 USD oswa 39 200 Goud",
       p6_pri_pme:"Odit Antrepriz (PME): $650 USD+ oswa 84 960 Goud",
-      // KONSILTASYON
       konsilt_ind_title:"Pri Konsiltasyon:",
       konsilt_ind_30:"30 minit: $12.99 USD oswa 1 700 Goud",
       konsilt_ind_60:"1 èdtan: $25 USD oswa 3 250 Goud",
@@ -493,7 +505,13 @@ const translations = {
       konsilt_30min:"30 minit", konsilt_1h:"1 èdtan", konsilt_strat:"Plan Estratejik",
       konsilt_p1_30:"$12.99 USD / 1 700 HTG", konsilt_p1_1h:"$25.00 USD / 3 250 HTG",
       konsilt_p2_30:"$15.00 USD / 1 960 HTG", konsilt_p2_1h:"$30.00 USD / 3 900 HTG",
-      konsilt_p2_strat:"$90.00 USD+ / 11 760+ HTG"
+      konsilt_p2_strat:"$90.00 USD+ / 11 760+ HTG",
+      pay_label:"// Metòd Peman", pay_title:"Metòd Peman Disponib",
+      pay_local_desc:"Peman lokal, rapid ak sekirize.",
+      pay_intl_name:"Kliyan Entènasyonal",
+      pay_intl_desc:"Ou nan dyaspora a oswa lòt peyi? Kontakte nou dirèkteman pou opsyon peman ki adapte pou ou.",
+      pay_intl_btn:"💬 Kontakte sou WhatsApp",
+      pay_view_btn:"💳 Wè Metòd Peman"
     },
     fr: {
       nav_brand:"ArmrData", nav_akèy:"Accueil", nav_apropos:"À Propos",
@@ -586,7 +604,13 @@ const translations = {
       konsilt_30min:"30 minutes", konsilt_1h:"1 heure", konsilt_strat:"Plan Stratégique",
       konsilt_p1_30:"$12.99 USD / 1 700 HTG", konsilt_p1_1h:"$25.00 USD / 3 250 HTG",
       konsilt_p2_30:"$15.00 USD / 1 960 HTG", konsilt_p2_1h:"$30.00 USD / 3 900 HTG",
-      konsilt_p2_strat:"$90.00 USD+ / 11 760+ HTG"
+      konsilt_p2_strat:"$90.00 USD+ / 11 760+ HTG",
+      pay_label:"// Méthode de Paiement", pay_title:"Méthodes de Paiement Disponibles",
+      pay_local_desc:"Paiement local, rapide et sécurisé.",
+      pay_intl_name:"Clients Internationaux",
+      pay_intl_desc:"Vous êtes dans la diaspora ou un autre pays ? Contactez-nous directement pour des options de paiement adaptées.",
+      pay_intl_btn:"💬 Contacter sur WhatsApp",
+      pay_view_btn:"💳 Voir les Méthodes de Paiement"
     },
     en: {
       nav_brand:"ArmrData", nav_akèy:"Home", nav_apropos:"About",
@@ -679,7 +703,13 @@ const translations = {
       konsilt_30min:"30 minutes", konsilt_1h:"1 hour", konsilt_strat:"Strategic Plan",
       konsilt_p1_30:"$12.99 USD / 1,700 HTG", konsilt_p1_1h:"$25.00 USD / 3,250 HTG",
       konsilt_p2_30:"$15.00 USD / 1,960 HTG", konsilt_p2_1h:"$30.00 USD / 3,900 HTG",
-      konsilt_p2_strat:"$90.00 USD+ / 11,760+ HTG"
+      konsilt_p2_strat:"$90.00 USD+ / 11,760+ HTG",
+      pay_label:"// Payment Method", pay_title:"Available Payment Methods",
+      pay_local_desc:"Local payment, fast and secure.",
+      pay_intl_name:"International Clients",
+      pay_intl_desc:"In the diaspora or another country? Contact us directly for payment options suited to you.",
+      pay_intl_btn:"💬 Contact on WhatsApp",
+      pay_view_btn:"💳 View Payment Methods"
     }
   }
 };
